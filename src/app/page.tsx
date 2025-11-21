@@ -1,16 +1,18 @@
 'use client'
 
+import dynamic from 'next/dynamic'
+
 import { useSelectHistoricalEvents } from '@/hoooks/useSelectHistoricalEvents'
-import { HistoricalEvent } from '@/interfaces/historicalEvent'
+
+const DynamicEventsMap = dynamic(
+  () => import('@/app/EventsMap/EventsMap').then((module) => module.default),
+  {
+    ssr: false,
+  }
+)
 
 export default function Home() {
   const { historicalEvents, error } = useSelectHistoricalEvents()
 
-  const historicalEventDisplay = (event: HistoricalEvent) => {
-    return <li key={event.id}>{event.name}</li>
-  }
-
-  return (
-    error === null && <ul>{historicalEvents.map(historicalEventDisplay)}</ul>
-  )
+  return error === null && <DynamicEventsMap events={historicalEvents} />
 }
