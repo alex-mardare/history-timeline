@@ -11,8 +11,15 @@ const DynamicEventsMap = dynamic(
   }
 )
 
-export default function Home() {
+function Home() {
   const { historicalEvents, error } = useSelectHistoricalEvents()
 
-  return error === null && <DynamicEventsMap events={historicalEvents} />
+  return (
+    error === null &&
+    historicalEvents.length > 0 && (
+      <DynamicEventsMap events={historicalEvents} />
+    )
+  )
 }
+
+export default Home
