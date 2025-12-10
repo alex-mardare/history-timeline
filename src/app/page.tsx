@@ -17,7 +17,7 @@ function Home() {
   return (
     error === null &&
     historicalEvents.length > 0 && (
-      <DynamicEventsMap events={historicalEvents} />
+      <DynamicEventsMap {...{ historicalEvents }} />
     )
   )
 }
