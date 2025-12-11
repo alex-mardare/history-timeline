@@ -1,10 +1,11 @@
-import { Combobox, InputBase, useCombobox } from '@mantine/core'
+import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
 
 import styles from './EventsSearchBar.module.css'
+import { DROPDOWM_OPTIONS_LIMIT } from '@/constants/constants'
 
 interface EventsSearchBarProps {
   historicalEvents: HistoricalEvent[]
@@ -20,13 +21,23 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
 
   const [search, setSearch] = useState('')
 
-  const eventNames = historicalEvents.map(
-    (event: HistoricalEvent) => event.name
-  )
-
-  const filteredOptions = eventNames.filter((eventName: string) =>
-    eventName.toLowerCase().includes(search.toLowerCase().trim())
-  )
+  const filterEventNames = () => {
+    const result: string[] = []
+    for (let i = 0; i < historicalEvents.length; i++) {
+      if (result.length === DROPDOWM_OPTIONS_LIMIT) {
+        break
+      }
+      if (
+        historicalEvents[i].name
+          .toLowerCase()
+          .includes(search.toLowerCase().trim())
+      ) {
+        result.push(historicalEvents[i].name)
+      }
+    }
+    return result
+  }
+  const filteredOptions = filterEventNames()
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 0) {
@@ -59,6 +70,20 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
       return <Combobox.Empty>Nothing found</Combobox.Empty>
     }
   }
+  const renderInputBaseRightSection = () => {
+    if (search.length > 0) {
+      return (
+        <CloseButton
+          aria-label="Clear value"
+          onClick={() => setSearch('')}
+          onMouseDown={(
+            event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+          ) => event.preventDefault()}
+          size="sm"
+        />
+      )
+    }
+  }
 
   return (
     <div className={styles['dropdown']}>
@@ -70,6 +95,7 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
             onClick={onClickFocus}
             onFocus={onClickFocus}
             placeholder="Search events"
+            rightSection={renderInputBaseRightSection()}
             value={search}
           />
         </Combobox.Target>

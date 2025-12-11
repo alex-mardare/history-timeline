@@ -7,13 +7,13 @@ interface HistoricalEvent {
   eventDate: string
   eventLocation: string | null
   eventTime: string | null
-  historicalEventCategory: HistoricalEventCategory
-  historicalState: HistoricalState
+  historicalEventCategory: HistoricalEventCategory | null
+  historicalState: HistoricalState | null
   id: number
   latitude: number | null
   longitude: number | null
   name: string
-  presentCountry: PresentCountry
+  presentCountry: PresentCountry | null
 }
 
 interface SupabaseHistoricalEvent {

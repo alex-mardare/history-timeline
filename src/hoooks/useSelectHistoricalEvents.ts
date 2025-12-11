@@ -6,7 +6,7 @@ import { PostgrestError } from '@supabase/supabase-js'
 import { supabaseClient } from '@/utils/supabaseClient'
 import {
   HistoricalEvent,
-  SupabaseHistoricalEvent,
+  SupabaseHistoricalEvent
 } from '@/interfaces/historicalEvent'
 
 export const useSelectHistoricalEvents = () => {
@@ -37,13 +37,13 @@ export const useSelectHistoricalEvents = () => {
                 eventLocation: historicalEvent.eventLocation,
                 eventTime: historicalEvent.eventTime,
                 historicalEventCategory:
-                  historicalEvent.historicalEventCategory[0],
-                historicalState: historicalEvent.historicalState[0],
+                  historicalEvent.historicalEventCategory?.[0] ?? null,
+                historicalState: historicalEvent.historicalState?.[0] ?? null,
                 id: historicalEvent.id,
                 latitude: historicalEvent.latitude,
                 longitude: historicalEvent.longitude,
                 name: historicalEvent.name,
-                presentCountry: historicalEvent.presentCountry[0],
+                presentCountry: historicalEvent.presentCountry?.[0] ?? null
               }
             }
           )
