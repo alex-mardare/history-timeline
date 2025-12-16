@@ -60,7 +60,7 @@ export const useSelectHistoricalEvents = () => {
     }
 
     selectRows()
-  }, [])
+  }, [addHistoricalEventToMap])
 
   return { historicalEvents, error }
 }

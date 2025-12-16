@@ -1,5 +1,5 @@
 interface Coordinates {
-  lat: number | undefined | null
-  lng: number | undefined | null
+  lat: number
+  lng: number
 }
 export type { Coordinates }

@@ -19,7 +19,9 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { historicalEventsMap, setMapCenter } = useStateStore((state) => state)
+  const { historicalEventsMap, mapCenter, setMapCenter } = useStateStore(
+    (state) => state
+  )
 
   const [search, setSearch] = useState('')
   const [events, setEvents] = useState<HistoricalEvent[]>([])
@@ -47,8 +49,8 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   const centerMapOnEvent = (eventId: number) => {
     const selectedEvent = historicalEventsMap.get(eventId)
     setMapCenter({
-      lat: selectedEvent?.latitude,
-      lng: selectedEvent?.longitude
+      lat: selectedEvent?.latitude ?? mapCenter.lat,
+      lng: selectedEvent?.longitude ?? mapCenter.lng
     })
   }
 
