@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import {
   MapContainer,
   Marker,
@@ -8,9 +9,10 @@ import {
 } from 'react-leaflet'
 
 import { EventsSearchBar } from '@/app/EventsSearch/EventsSearchBar'
+import { MapUtil } from '@/app/MapUtil'
 import { mapPopupIcon } from '@/constants/mapPopupIcon'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
-import { MapResizer } from '@/utils/MapResizer'
+import { useStateStore } from '@/providers/storeProvider'
 import { calculateMapCenter } from '@/utils/mapUtils'
 
 import 'leaflet/dist/leaflet.css'
@@ -23,6 +25,7 @@ interface EventsMapContainerProps {
 function EventsMap({
   historicalEvents
 }: EventsMapContainerProps): React.JSX.Element {
+  const { mapCenter, setMapCenter } = useStateStore((state) => state)
   const drawMapMarker = (event: HistoricalEvent) => {
     if (event.latitude && event.longitude) {
       return (
@@ -41,11 +44,15 @@ function EventsMap({
     }
   }
 
+  useEffect(() => {
+    setMapCenter(calculateMapCenter(historicalEvents))
+  }, [historicalEvents, setMapCenter])
+
   return (
     <>
       <EventsSearchBar {...{ historicalEvents }} />
       <MapContainer
-        center={calculateMapCenter(historicalEvents)}
+        center={mapCenter}
         className={styles['events-map-container']}
         zoom={4}
         zoomControl={false}
@@ -53,7 +60,7 @@ function EventsMap({
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {historicalEvents.map((event: HistoricalEvent) => drawMapMarker(event))}
         <ZoomControl position="topright" />
-        <MapResizer />
+        <MapUtil center={mapCenter} />
       </MapContainer>
     </>
   )

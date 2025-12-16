@@ -1,32 +1,34 @@
 import {
   ColorSchemeScript,
   mantineHtmlProps,
-  MantineProvider,
+  MantineProvider
 } from '@mantine/core'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+
+import { StoreProvider } from '@/providers/storeProvider'
 
 import '@mantine/core/styles.css'
 import './globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
+  subsets: ['latin']
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
-  subsets: ['latin'],
+  subsets: ['latin']
 })
 
 export const metadata: Metadata = {
   authors: [{ name: 'Alexandru Mardare' }],
   icons: 'assets/main-icon.svg',
-  title: 'History Timeline',
+  title: 'History Timeline'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode
 }>) {
@@ -36,7 +38,9 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider>
+          <StoreProvider>{children}</StoreProvider>
+        </MantineProvider>
       </body>
     </html>
   )

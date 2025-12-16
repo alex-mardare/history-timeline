@@ -1,11 +1,12 @@
 import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { DROPDOWM_OPTIONS_LIMIT } from '@/constants/constants'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
+import { useStateStore } from '@/providers/storeProvider'
 
 import styles from './EventsSearchBar.module.css'
-import { DROPDOWM_OPTIONS_LIMIT } from '@/constants/constants'
 
 interface EventsSearchBarProps {
   historicalEvents: HistoricalEvent[]
@@ -18,26 +19,38 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
+  const { historicalEventsMap, setMapCenter } = useStateStore((state) => state)
 
   const [search, setSearch] = useState('')
+  const [events, setEvents] = useState<HistoricalEvent[]>([])
+
+  useEffect(() => {
+    setEvents(
+      historicalEvents.filter(
+        (event: HistoricalEvent) => event.latitude && event.longitude
+      )
+    )
+  }, [historicalEvents])
 
   const filterEventNames = () => {
-    const result: string[] = []
-    for (let i = 0; i < historicalEvents.length; i++) {
+    const result: HistoricalEvent[] = []
+    for (let i = 0; i < events.length; i++) {
       if (result.length === DROPDOWM_OPTIONS_LIMIT) {
         break
       }
-      if (
-        historicalEvents[i].name
-          .toLowerCase()
-          .includes(search.toLowerCase().trim())
-      ) {
-        result.push(historicalEvents[i].name)
+      if (events[i].name.toLowerCase().includes(search.toLowerCase().trim())) {
+        result.push(events[i])
       }
     }
     return result
   }
-  const filteredOptions = filterEventNames()
+  const centerMapOnEvent = (eventId: number) => {
+    const selectedEvent = historicalEventsMap.get(eventId)
+    setMapCenter({
+      lat: selectedEvent?.latitude,
+      lng: selectedEvent?.longitude
+    })
+  }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 0) {
@@ -59,11 +72,19 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     setSearch(value)
     comboboxStore.closeDropdown()
   }
+
   const renderComboboxOptions = () => {
+    const filteredOptions = filterEventNames()
     if (filteredOptions.length > 0) {
-      return filteredOptions.map((item) => (
-        <Combobox.Option value={item} key={item}>
-          {item}
+      return filteredOptions.map((option: HistoricalEvent) => (
+        <Combobox.Option
+          key={option.id}
+          onClick={() => {
+            centerMapOnEvent(option.id)
+          }}
+          value={option.name}
+        >
+          {option.name}
         </Combobox.Option>
       ))
     } else {

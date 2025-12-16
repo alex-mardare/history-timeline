@@ -1,19 +1,23 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { PostgrestError } from '@supabase/supabase-js'
+import { useEffect, useState } from 'react'
 
-import { supabaseClient } from '@/utils/supabaseClient'
 import {
   HistoricalEvent,
   SupabaseHistoricalEvent
 } from '@/interfaces/historicalEvent'
+import { useStateStore } from '@/providers/storeProvider'
+import { supabaseClient } from '@/utils/supabaseClient'
 
 export const useSelectHistoricalEvents = () => {
   const [historicalEvents, setHistoricalEvents] = useState<HistoricalEvent[]>(
     []
   )
   const [error, setError] = useState<PostgrestError | null>(null)
+
+  const { addHistoricalEventToMap } = useStateStore((state) => state)
+
   useEffect(() => {
     async function selectRows() {
       const { data, error } = await supabaseClient
@@ -31,7 +35,7 @@ export const useSelectHistoricalEvents = () => {
         if (data) {
           const cleanHistoricalEvents: HistoricalEvent[] = data.map(
             (historicalEvent: SupabaseHistoricalEvent) => {
-              return {
+              const cleanHistoricalEvent = {
                 description: historicalEvent.description,
                 eventDate: historicalEvent.eventDate,
                 eventLocation: historicalEvent.eventLocation,
@@ -45,6 +49,8 @@ export const useSelectHistoricalEvents = () => {
                 name: historicalEvent.name,
                 presentCountry: historicalEvent.presentCountry?.[0] ?? null
               }
+              addHistoricalEventToMap(cleanHistoricalEvent)
+              return cleanHistoricalEvent
             }
           )
 
