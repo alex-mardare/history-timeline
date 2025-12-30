@@ -1,21 +1,21 @@
 import { createStore } from 'zustand/vanilla'
 
-import { Coordinates } from '@/interfaces/coordinates'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
+import { MapCenter } from '@/interfaces/mapInterfaces'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void
-  setMapCenter: (coordinates: Coordinates) => void
+  setMapCenter: (mapCenter: MapCenter) => void
 }
 export type State = {
   historicalEventsMap: Map<number, HistoricalEvent>
-  mapCenter: Coordinates
+  mapCenter: MapCenter
 }
 export type Store = State & Actions
 
 export const defaultInitState: State = {
   historicalEventsMap: new Map(),
-  mapCenter: { lat: 0, lng: 0 }
+  mapCenter: { lat: 0, lng: 0, zoom: 0 }
 }
 
 export const createStateStore = (initState: State = defaultInitState) => {
@@ -28,6 +28,6 @@ export const createStateStore = (initState: State = defaultInitState) => {
           historicalEvent
         )
       })),
-    setMapCenter: (coordinates: Coordinates) => set({ mapCenter: coordinates })
+    setMapCenter: (mapCenter: MapCenter) => set({ mapCenter: mapCenter })
   }))
 }

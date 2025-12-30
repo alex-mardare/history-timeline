@@ -10,6 +10,7 @@ import {
 
 import { EventsSearchBar } from '@/app/EventsSearch/EventsSearchBar'
 import { MapUtil } from '@/app/MapUtil'
+import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { mapPopupIcon } from '@/constants/mapPopupIcon'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
 import { useStateStore } from '@/providers/storeProvider'
@@ -54,7 +55,7 @@ function EventsMap({
       <MapContainer
         center={mapCenter}
         className={styles['events-map-container']}
-        zoom={4}
+        zoom={MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL}
         zoomControl={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

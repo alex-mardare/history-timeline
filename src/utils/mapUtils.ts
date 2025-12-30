@@ -1,8 +1,8 @@
-import { LatLng } from 'leaflet'
-
+import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
+import { MapCenter } from '@/interfaces/mapInterfaces'
 
-const calculateMapCenter = (events: HistoricalEvent[]): LatLng => {
+const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {
   let mapCenterLatitude: number = 0
   let mapCenterLongitude: number = 0
 
@@ -15,10 +15,11 @@ const calculateMapCenter = (events: HistoricalEvent[]): LatLng => {
     mapCenterLongitude += event.longitude ?? 0
   })
 
-  return new LatLng(
-    mapCenterLatitude / coordinatesEvents.length,
-    mapCenterLongitude / coordinatesEvents.length
-  )
+  return {
+    lat: mapCenterLatitude / coordinatesEvents.length,
+    lng: mapCenterLongitude / coordinatesEvents.length,
+    zoom: MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL
+  }
 }
 
 export { calculateMapCenter }

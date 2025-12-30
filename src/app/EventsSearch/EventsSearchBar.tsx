@@ -2,7 +2,7 @@ import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { DROPDOWM_OPTIONS_LIMIT } from '@/constants/constants'
+import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
 import { useStateStore } from '@/providers/storeProvider'
 
@@ -50,7 +50,8 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     const selectedEvent = historicalEventsMap.get(eventId)
     setMapCenter({
       lat: selectedEvent?.latitude ?? mapCenter.lat,
-      lng: selectedEvent?.longitude ?? mapCenter.lng
+      lng: selectedEvent?.longitude ?? mapCenter.lng,
+      zoom: MAP_ZOOM_LEVEL.EVENT_ZOOM_LEVEL
     })
   }
 
