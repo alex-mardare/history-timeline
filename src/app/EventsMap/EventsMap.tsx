@@ -1,5 +1,4 @@
 import React from 'react'
-import { useEffect } from 'react'
 import {
   MapContainer,
   Marker,
@@ -13,20 +12,20 @@ import { MapUtil } from '@/app/MapUtil'
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { mapPopupIcon } from '@/constants/mapPopupIcon'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
-import { useStateStore } from '@/providers/storeProvider'
-import { calculateMapCenter } from '@/utils/mapUtils'
+import { MapCenter } from '@/interfaces/mapInterfaces'
 
 import 'leaflet/dist/leaflet.css'
 import styles from './EventsMap.module.css'
 
 interface EventsMapContainerProps {
   historicalEvents: HistoricalEvent[]
+  mapCenter: MapCenter
 }
 
 function EventsMap({
-  historicalEvents
+  historicalEvents,
+  mapCenter
 }: EventsMapContainerProps): React.JSX.Element {
-  const { mapCenter, setMapCenter } = useStateStore((state) => state)
   const drawMapMarker = (event: HistoricalEvent) => {
     if (event.latitude && event.longitude) {
       return (
@@ -44,10 +43,6 @@ function EventsMap({
       )
     }
   }
-
-  useEffect(() => {
-    setMapCenter(calculateMapCenter(historicalEvents))
-  }, [historicalEvents, setMapCenter])
 
   return (
     <>
