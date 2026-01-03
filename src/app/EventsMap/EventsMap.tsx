@@ -6,6 +6,7 @@ import {
   TileLayer,
   ZoomControl
 } from 'react-leaflet'
+import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { EventsSearchBar } from '@/app/EventsSearch/EventsSearchBar'
 import { MapUtil } from '@/app/MapUtil'
@@ -15,6 +16,8 @@ import { HistoricalEvent } from '@/interfaces/historicalEvent'
 import { MapCenter } from '@/interfaces/mapInterfaces'
 
 import 'leaflet/dist/leaflet.css'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import styles from './EventsMap.module.css'
 
 interface EventsMapContainerProps {
@@ -54,7 +57,15 @@ function EventsMap({
         zoomControl={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {historicalEvents.map((event: HistoricalEvent) => drawMapMarker(event))}
+        <MarkerClusterGroup
+          chunkedLoading={true}
+          maxClusterRadius={20}
+          showCoverageOnHover={false}
+        >
+          {historicalEvents.map((event: HistoricalEvent) =>
+            drawMapMarker(event)
+          )}
+        </MarkerClusterGroup>
         <ZoomControl position="topright" />
         <MapUtil center={mapCenter} />
       </MapContainer>
