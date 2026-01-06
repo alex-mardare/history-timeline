@@ -1,7 +1,12 @@
 .dropdown {
+  display: flex;
   left: 20px;
   position: absolute;
   top: 20px;
   width: 30%;
   z-index: 100;
+}
+
+.dropdown > :first-child {
+  flex: 1;
 }

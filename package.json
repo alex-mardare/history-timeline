@@ -11,6 +11,7 @@
   "dependencies": {
     "@mantine/core": "^8.3.9",
     "@supabase/supabase-js": "^2.76.1",
+    "@tabler/icons-react": "^3.36.1",
     "@types/react-leaflet": "^2.8.3",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.555.0",

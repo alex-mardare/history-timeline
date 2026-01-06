@@ -15,12 +15,16 @@ const DynamicEventsMap = dynamic(
 )
 
 function Home() {
-  const { mapCenter, setMapCenter } = useStateStore((state) => state)
+  const { mapCenter, setEventsCalculatedCenter, setMapCenter } = useStateStore(
+    (state) => state
+  )
   const { historicalEvents, error } = useSelectHistoricalEvents()
 
   useEffect(() => {
-    setMapCenter(calculateMapCenter(historicalEvents))
-  }, [historicalEvents, setMapCenter])
+    const calculatedCenter = calculateMapCenter(historicalEvents)
+    setMapCenter(calculatedCenter)
+    setEventsCalculatedCenter(calculatedCenter)
+  }, [historicalEvents, setEventsCalculatedCenter, setMapCenter])
 
   return (
     error === null &&

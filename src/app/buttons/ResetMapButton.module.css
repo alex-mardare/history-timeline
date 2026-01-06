@@ -1,0 +1,11 @@
+.reset-button {
+  background-color: transparent;
+  color: slategrey;
+  height: 36px;
+  width: 36px;
+}
+
+.reset-button:hover {
+  background-color: transparent;
+  color: slategrey;
+}

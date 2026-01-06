@@ -2,6 +2,7 @@ import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { ResetMapButton } from '@/app/buttons/ResetMapButton'
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { HistoricalEvent } from '@/interfaces/historicalEvent'
 import { useStateStore } from '@/providers/storeProvider'
@@ -23,7 +24,7 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     (state) => state
   )
 
-  const [search, setSearch] = useState('')
+  const [searchText, setSearchText] = useState('')
   const [events, setEvents] = useState<HistoricalEvent[]>([])
 
   useEffect(() => {
@@ -40,7 +41,9 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
       if (result.length === DROPDOWM_OPTIONS_LIMIT) {
         break
       }
-      if (events[i].name.toLowerCase().includes(search.toLowerCase().trim())) {
+      if (
+        events[i].name.toLowerCase().includes(searchText.toLowerCase().trim())
+      ) {
         result.push(events[i])
       }
     }
@@ -59,9 +62,9 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     if (event.target.value.length > 0) {
       comboboxStore.openDropdown()
       comboboxStore.updateSelectedOptionIndex()
-      setSearch(event.currentTarget.value)
+      setSearchText(event.currentTarget.value)
     } else {
-      setSearch('')
+      setSearchText('')
       comboboxStore.closeDropdown()
     }
   }
@@ -72,7 +75,7 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     }
   }
   const onOptionSubmit = (value: string) => {
-    setSearch(value)
+    setSearchText(value)
     comboboxStore.closeDropdown()
   }
 
@@ -95,11 +98,11 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     }
   }
   const renderInputBaseRightSection = () => {
-    if (search.length > 0) {
+    if (searchText.length > 0) {
       return (
         <CloseButton
           aria-label="Clear value"
-          onClick={() => setSearch('')}
+          onClick={() => setSearchText('')}
           onMouseDown={(
             event: React.MouseEvent<HTMLButtonElement, MouseEvent>
           ) => event.preventDefault()}
@@ -120,7 +123,7 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
             onFocus={onClickFocus}
             placeholder="Search events"
             rightSection={renderInputBaseRightSection()}
-            value={search}
+            value={searchText}
           />
         </Combobox.Target>
 
@@ -128,6 +131,10 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
           <Combobox.Options>{renderComboboxOptions()}</Combobox.Options>
         </Combobox.Dropdown>
       </Combobox>
+      <ResetMapButton
+        resetSearchText={() => setSearchText('')}
+        {...{ searchText }}
+      />
     </div>
   )
 }
