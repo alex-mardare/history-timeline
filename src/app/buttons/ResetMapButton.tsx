@@ -1,4 +1,4 @@
-import { ActionIcon } from '@mantine/core'
+import { ActionIcon, Tooltip } from '@mantine/core'
 import { IconCircleX } from '@tabler/icons-react'
 import React from 'react'
 
@@ -12,21 +12,23 @@ interface ResetMapButtonProps {
 }
 
 function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
-  const { eventsCalculatedCenter, setMapCenter } = useStateStore(
+  const { eventsCalculatedCenter, mapCenter, setMapCenter } = useStateStore(
     (state) => state
   )
 
   const onClick = () => {
-    if (searchText.length > 0) {
+    if (searchText.length > 0 && eventsCalculatedCenter !== mapCenter) {
       setMapCenter(eventsCalculatedCenter)
       resetSearchText()
     }
   }
 
   return (
-    <ActionIcon className={styles['reset-button']} onClick={onClick}>
-      <IconCircleX />
-    </ActionIcon>
+    <Tooltip label="Reset map search" openDelay={650} withArrow>
+      <ActionIcon className={styles['reset-button']} onClick={onClick}>
+        <IconCircleX />
+      </ActionIcon>
+    </Tooltip>
   )
 }
 
