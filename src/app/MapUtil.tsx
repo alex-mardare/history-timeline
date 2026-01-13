@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react'
 import { useMapEvents } from 'react-leaflet'
 
-import { MapCenter } from '@/interfaces/mapInterfaces'
 import { useStateStore } from '@/providers/storeProvider'
+import { MapCenter } from '@/types/mapInterfaces'
 
 interface MapUtilProps {
   center: MapCenter
@@ -38,7 +38,7 @@ function MapUtil({ center }: MapUtilProps) {
   }, [center, map])
 
   useEffect(() => {
-    if (!center) return
+    if (!mapCenter) return
 
     const currentCenter = map.getCenter()
     const currentZoom = map.getZoom()

@@ -1,6 +1,6 @@
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
-import { HistoricalEvent } from '@/interfaces/historicalEvent'
-import { MapCenter } from '@/interfaces/mapInterfaces'
+import { HistoricalEvent } from '@/types/historicalEvent'
+import { MapCenter } from '@/types/mapInterfaces'
 
 const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {
   let mapCenterLatitude: number = 0

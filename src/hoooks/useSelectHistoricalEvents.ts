@@ -3,11 +3,8 @@
 import { PostgrestError } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
 
-import {
-  HistoricalEvent,
-  SupabaseHistoricalEvent
-} from '@/interfaces/historicalEvent'
 import { useStateStore } from '@/providers/storeProvider'
+import { HistoricalEvent } from '@/types/historicalEvent'
 import { supabaseClient } from '@/utils/supabaseClient'
 
 export const useSelectHistoricalEvents = () => {
@@ -29,32 +26,13 @@ export const useSelectHistoricalEvents = () => {
           presentCountry:present_countries(name)
           `
         )
+        .not('latitude', 'is', null)
+        .not('longitude', 'is', null)
       if (error) {
         setError(error)
       } else {
         if (data) {
-          const cleanHistoricalEvents: HistoricalEvent[] = data.map(
-            (historicalEvent: SupabaseHistoricalEvent) => {
-              const cleanHistoricalEvent = {
-                description: historicalEvent.description,
-                eventDate: historicalEvent.eventDate,
-                eventLocation: historicalEvent.eventLocation,
-                eventTime: historicalEvent.eventTime,
-                historicalEventCategory:
-                  historicalEvent.historicalEventCategory?.[0] ?? null,
-                historicalState: historicalEvent.historicalState?.[0] ?? null,
-                id: historicalEvent.id,
-                latitude: historicalEvent.latitude,
-                longitude: historicalEvent.longitude,
-                name: historicalEvent.name,
-                presentCountry: historicalEvent.presentCountry?.[0] ?? null
-              }
-              addHistoricalEventToMap(cleanHistoricalEvent)
-              return cleanHistoricalEvent
-            }
-          )
-
-          setHistoricalEvents(cleanHistoricalEvents)
+          setHistoricalEvents(data)
         }
       }
     }

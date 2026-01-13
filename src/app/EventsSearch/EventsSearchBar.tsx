@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { ResetMapButton } from '@/app/buttons/ResetMapButton'
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
-import { HistoricalEvent } from '@/interfaces/historicalEvent'
 import { useStateStore } from '@/providers/storeProvider'
+import { HistoricalEvent } from '@/types/historicalEvent'
 
 import styles from './EventsSearchBar.module.css'
 

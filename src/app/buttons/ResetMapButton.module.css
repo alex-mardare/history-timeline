@@ -1,11 +1,13 @@
+@import '@/../../globals.css';
+
 .reset-button {
-  background-color: transparent;
-  color: slategrey;
+  background-color: var(--button-background-colour);
+  color: var(--button-colour);
   height: 36px;
   width: 36px;
 }
 
 .reset-button:hover {
-  background-color: transparent;
-  color: slategrey;
+  background-color: var(--button-background-colour);
+  color: var(--button-colour);
 }

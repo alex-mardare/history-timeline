@@ -1,7 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 
-import { HistoricalEvent } from '@/interfaces/historicalEvent'
-import { MapCenter } from '@/interfaces/mapInterfaces'
+import { HistoricalEvent } from '@/types/historicalEvent'
+import { MapCenter } from '@/types/mapInterfaces'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void

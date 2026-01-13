@@ -12,8 +12,8 @@ import { EventsSearchBar } from '@/app/EventsSearch/EventsSearchBar'
 import { MapUtil } from '@/app/MapUtil'
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { mapPopupIcon } from '@/constants/mapPopupIcon'
-import { HistoricalEvent } from '@/interfaces/historicalEvent'
-import { MapCenter } from '@/interfaces/mapInterfaces'
+import { HistoricalEvent } from '@/types/historicalEvent'
+import { MapCenter } from '@/types/mapInterfaces'
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
@@ -29,24 +29,6 @@ function EventsMap({
   historicalEvents,
   mapCenter
 }: EventsMapContainerProps): React.JSX.Element {
-  const drawMapMarker = (event: HistoricalEvent) => {
-    if (event.latitude && event.longitude) {
-      return (
-        <Marker
-          key={event.id}
-          icon={mapPopupIcon}
-          position={[event.latitude, event.longitude]}
-        >
-          <Popup>
-            <b>{event.name}</b>
-            <br />
-            {event.description}
-          </Popup>
-        </Marker>
-      )
-    }
-  }
-
   return (
     <>
       <EventsSearchBar {...{ historicalEvents }} />
@@ -62,9 +44,19 @@ function EventsMap({
           maxClusterRadius={20}
           showCoverageOnHover={false}
         >
-          {historicalEvents.map((event: HistoricalEvent) =>
-            drawMapMarker(event)
-          )}
+          {historicalEvents.map((event: HistoricalEvent) => (
+            <Marker
+              key={event.id}
+              icon={mapPopupIcon}
+              position={[event.latitude as number, event.longitude as number]}
+            >
+              <Popup>
+                <b>{event.name}</b>
+                <br />
+                {event.description}
+              </Popup>
+            </Marker>
+          ))}
         </MarkerClusterGroup>
         <ZoomControl position="topright" />
         <MapUtil center={mapCenter} />
