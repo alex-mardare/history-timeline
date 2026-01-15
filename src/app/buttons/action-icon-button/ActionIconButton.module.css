@@ -1,13 +1,15 @@
-@import '@/../../globals.css';
+@import '@/../../../globals.css';
 
-.reset-button {
+.action-icon-button {
   background-color: var(--button-background-colour);
+  border: var(--border-default);
+  border-radius: var(--border-radius-default);
   color: var(--button-colour);
   height: 36px;
   width: 36px;
 }
 
-.reset-button:hover {
+.action-icon-button:hover {
   background-color: var(--button-background-colour);
   color: var(--button-colour);
 }

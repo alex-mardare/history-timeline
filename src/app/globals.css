@@ -1,4 +1,6 @@
 :root {
-  --button-background-colour: transparent;
-  --button-colour: #708090;
+  --border-default: 1px solid #ced4da;
+  --border-radius-default: calc(0.25rem * 1);
+  --button-background-colour: white;
+  --button-colour: #2563eb;
 }

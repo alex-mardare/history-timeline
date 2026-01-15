@@ -1,4 +1,4 @@
-.dropdown {
+.search-area {
   display: flex;
   left: 20px;
   position: absolute;
@@ -7,6 +7,6 @@
   z-index: 100;
 }
 
-.dropdown > :first-child {
+.search-area > :first-child {
   flex: 1;
 }

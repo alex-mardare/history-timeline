@@ -2,6 +2,8 @@ import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { EventSearchButton } from '@/app/buttons/EventSearchButton'
+import { LocationSearchButton } from '@/app/buttons/LocationSearchButton'
 import { ResetMapButton } from '@/app/buttons/ResetMapButton'
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
@@ -113,7 +115,7 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   }
 
   return (
-    <div className={styles['dropdown']}>
+    <div className={styles['search-area']}>
       <Combobox onOptionSubmit={onOptionSubmit} store={comboboxStore}>
         <Combobox.Target>
           <InputBase
@@ -135,6 +137,8 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
         resetSearchText={() => setSearchText('')}
         {...{ searchText }}
       />
+      <LocationSearchButton />
+      <EventSearchButton />
     </div>
   )
 }
