@@ -22,9 +22,8 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { historicalEventsMap, mapCenter, setMapCenter } = useStateStore(
-    (state) => state
-  )
+  const { historicalEventsMap, mapCenter, searchType, setMapCenter } =
+    useStateStore((state) => state)
 
   const [searchText, setSearchText] = useState('')
   const [events, setEvents] = useState<HistoricalEvent[]>([])
@@ -137,8 +136,8 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
         resetSearchText={() => setSearchText('')}
         {...{ searchText }}
       />
-      <LocationSearchButton />
-      <EventSearchButton />
+      {searchType === 'event' && <LocationSearchButton />}
+      {searchType === 'location' && <EventSearchButton />}
     </div>
   )
 }

@@ -6,7 +6,7 @@
   border-radius: var(--border-radius-default);
   color: var(--button-colour);
   height: 36px;
-  width: 36px;
+  width: 38px;
 }
 
 .action-icon-button:hover {

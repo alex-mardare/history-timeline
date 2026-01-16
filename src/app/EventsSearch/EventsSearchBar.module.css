@@ -1,9 +1,10 @@
 .search-area {
   display: flex;
+  gap: 5px;
   left: 20px;
   position: absolute;
   top: 20px;
-  width: 30%;
+  width: 32%;
   z-index: 100;
 }
 

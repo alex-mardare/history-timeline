@@ -1,24 +1,28 @@
 import { createStore } from 'zustand/vanilla'
 
 import { HistoricalEvent } from '@/types/historicalEvent'
+import { SearchType } from '@/types/enums'
 import { MapCenter } from '@/types/mapInterfaces'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void
   setEventsCalculatedCenter: (center: MapCenter) => void
   setMapCenter: (mapCenter: MapCenter) => void
+  setSearchType: (searchType: SearchType) => void
 }
 export type State = {
   eventsCalculatedCenter: MapCenter
   historicalEventsMap: Map<number, HistoricalEvent>
   mapCenter: MapCenter
+  searchType: SearchType
 }
 export type Store = State & Actions
 
 export const defaultInitState: State = {
   eventsCalculatedCenter: { lat: 0, lng: 0, zoom: 0 },
   historicalEventsMap: new Map(),
-  mapCenter: { lat: 0, lng: 0, zoom: 0 }
+  mapCenter: { lat: 0, lng: 0, zoom: 0 },
+  searchType: 'event'
 }
 
 export const createStateStore = (initState: State = defaultInitState) => {
@@ -33,6 +37,7 @@ export const createStateStore = (initState: State = defaultInitState) => {
       })),
     setEventsCalculatedCenter: (center: MapCenter) =>
       set({ eventsCalculatedCenter: center }),
-    setMapCenter: (mapCenter: MapCenter) => set({ mapCenter: mapCenter })
+    setMapCenter: (mapCenter: MapCenter) => set({ mapCenter: mapCenter }),
+    setSearchType: (searchType: SearchType) => set({ searchType: searchType })
   }))
 }
