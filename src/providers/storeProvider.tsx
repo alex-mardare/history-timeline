@@ -3,7 +3,7 @@
 import { type ReactNode, createContext, useState, useContext } from 'react'
 import { useStore } from 'zustand'
 
-import { type Store, createStateStore } from '@/hoooks/globalStore'
+import { type Store, createStateStore } from '@/hooks/globalStore'
 
 export type StoreApi = ReturnType<typeof createStateStore>
 export interface StoreProviderProps {

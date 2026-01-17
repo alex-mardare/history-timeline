@@ -32,6 +32,9 @@ export const useSelectHistoricalEvents = () => {
         setError(error)
       } else {
         if (data) {
+          data.forEach((event: HistoricalEvent) => {
+            addHistoricalEventToMap(event)
+          })
           setHistoricalEvents(data)
         }
       }
