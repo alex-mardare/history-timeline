@@ -15,7 +15,7 @@ const DynamicEventsMap = dynamic(
 )
 
 function Home() {
-  const { mapCenter, setEventsCalculatedCenter, setMapCenter } = useStateStore(
+  const { setEventsCalculatedCenter, setMapCenter } = useStateStore(
     (state) => state
   )
   const { historicalEvents, error } = useSelectHistoricalEvents()
@@ -29,7 +29,7 @@ function Home() {
   return (
     error === null &&
     historicalEvents.length > 0 && (
-      <DynamicEventsMap {...{ historicalEvents, mapCenter }} />
+      <DynamicEventsMap {...{ historicalEvents }} />
     )
   )
 }
