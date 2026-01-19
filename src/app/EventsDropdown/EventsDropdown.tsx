@@ -1,31 +1,33 @@
 import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
 import { Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import { EventSearchButton } from '@/app/buttons/EventSearchButton'
-import { LocationSearchButton } from '@/app/buttons/LocationSearchButton'
-import { ResetMapButton } from '@/app/buttons/ResetMapButton'
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types/historicalEvent'
 
-import styles from './EventsSearchBar.module.css'
-
-interface EventsSearchBarProps {
+interface EventsDropdownProps {
   historicalEvents: HistoricalEvent[]
+  searchText: string
+  setSearchText: Dispatch<SetStateAction<string>>
 }
+
 type OnClickFocusEvent =
   | React.FocusEvent<HTMLInputElement>
   | React.MouseEvent<HTMLInputElement>
 
-function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
+function EventsDropdown({
+  historicalEvents,
+  searchText,
+  setSearchText
+}: EventsDropdownProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { historicalEventsMap, mapCenter, searchType, setMapCenter } =
-    useStateStore((state) => state)
+  const { historicalEventsMap, mapCenter, setMapCenter } = useStateStore(
+    (state) => state
+  )
 
-  const [searchText, setSearchText] = useState('')
   const [events, setEvents] = useState<HistoricalEvent[]>([])
 
   useEffect(() => {
@@ -36,6 +38,14 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     )
   }, [historicalEvents])
 
+  const centerMapOnEvent = (eventId: number) => {
+    const selectedEvent = historicalEventsMap.get(eventId)
+    setMapCenter({
+      lat: selectedEvent?.latitude ?? mapCenter.lat,
+      lng: selectedEvent?.longitude ?? mapCenter.lng,
+      zoom: MAP_ZOOM_LEVEL.EVENT_ZOOM_LEVEL
+    })
+  }
   const filterEventNames = () => {
     const result: HistoricalEvent[] = []
     for (let i = 0; i < events.length; i++) {
@@ -50,15 +60,6 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
     }
     return result
   }
-  const centerMapOnEvent = (eventId: number) => {
-    const selectedEvent = historicalEventsMap.get(eventId)
-    setMapCenter({
-      lat: selectedEvent?.latitude ?? mapCenter.lat,
-      lng: selectedEvent?.longitude ?? mapCenter.lng,
-      zoom: MAP_ZOOM_LEVEL.EVENT_ZOOM_LEVEL
-    })
-  }
-
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 0) {
       comboboxStore.openDropdown()
@@ -114,32 +115,24 @@ function EventsSearchBar({ historicalEvents }: EventsSearchBarProps) {
   }
 
   return (
-    <div className={styles['search-area']}>
-      <Combobox onOptionSubmit={onOptionSubmit} store={comboboxStore}>
-        <Combobox.Target>
-          <InputBase
-            leftSection={<Search />}
-            onChange={onChange}
-            onClick={onClickFocus}
-            onFocus={onClickFocus}
-            placeholder="Search events"
-            rightSection={renderInputBaseRightSection()}
-            value={searchText}
-          />
-        </Combobox.Target>
+    <Combobox onOptionSubmit={onOptionSubmit} store={comboboxStore}>
+      <Combobox.Target>
+        <InputBase
+          leftSection={<Search />}
+          onChange={onChange}
+          onClick={onClickFocus}
+          onFocus={onClickFocus}
+          placeholder="Search events"
+          rightSection={renderInputBaseRightSection()}
+          value={searchText}
+        />
+      </Combobox.Target>
 
-        <Combobox.Dropdown>
-          <Combobox.Options>{renderComboboxOptions()}</Combobox.Options>
-        </Combobox.Dropdown>
-      </Combobox>
-      <ResetMapButton
-        resetSearchText={() => setSearchText('')}
-        {...{ searchText }}
-      />
-      {searchType === 'event' && <LocationSearchButton />}
-      {searchType === 'location' && <EventSearchButton />}
-    </div>
+      <Combobox.Dropdown>
+        <Combobox.Options>{renderComboboxOptions()}</Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   )
 }
 
-export { EventsSearchBar }
+export { EventsDropdown }

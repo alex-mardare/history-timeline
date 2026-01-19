@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { EventMarkers } from '@/app/EventMarkers'
-import { EventsSearchBar } from '@/app/EventsSearch/EventsSearchBar'
+import { SearchArea } from '@/app/SearchArea/SearchArea'
 import { MapController } from '@/app/MapController'
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { HistoricalEvent } from '@/types/historicalEvent'
@@ -24,7 +24,7 @@ function EventsMap({
   const { mapCenter } = useStateStore((state) => state)
   return (
     <>
-      <EventsSearchBar {...{ historicalEvents }} />
+      <SearchArea {...{ historicalEvents }} />
       <MapContainer
         center={[mapCenter.lat, mapCenter.lng]}
         className={styles['events-map-container']}
