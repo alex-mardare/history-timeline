@@ -1,14 +1,13 @@
 import { useCombobox } from '@mantine/core'
 import { useState } from 'react'
 
-import { EventSearchButton } from '@/app/buttons/EventSearchButton'
-import { LocationSearchButton } from '@/app/buttons/LocationSearchButton'
-import { ResetMapButton } from '@/app/buttons/ResetMapButton'
+import { ResetMapButton } from '@/app/Buttons/ResetMapButton'
+import { EventsSearchArea } from '@/app/SearchArea/Events/EventsSearchArea'
+import { LocationSearchArea } from '@/app/SearchArea/Locations/LocationSearchArea'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types/historicalEvent'
 
 import styles from './SearchArea.module.css'
-import { EventsDropdown } from '../EventsDropdown/EventsDropdown'
 
 interface SearchAreaProps {
   historicalEvents: HistoricalEvent[]
@@ -23,13 +22,18 @@ function SearchArea({ historicalEvents }: SearchAreaProps) {
 
   return (
     <div className={styles['search-area']}>
-      <EventsDropdown {...{ historicalEvents, searchText, setSearchText }} />
+      {searchType === 'event' && (
+        <EventsSearchArea
+          {...{ historicalEvents, searchText, setSearchText }}
+        />
+      )}
+      {searchType === 'location' && (
+        <LocationSearchArea {...{ searchText, setSearchText }} />
+      )}
       <ResetMapButton
         resetSearchText={() => setSearchText('')}
         {...{ searchText }}
       />
-      {searchType === 'event' && <LocationSearchButton />}
-      {searchType === 'location' && <EventSearchButton />}
     </div>
   )
 }

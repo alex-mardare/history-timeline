@@ -6,7 +6,7 @@ import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types/historicalEvent'
 
-interface EventsDropdownProps {
+interface EventsSearchBarProps {
   historicalEvents: HistoricalEvent[]
   searchText: string
   setSearchText: Dispatch<SetStateAction<string>>
@@ -16,11 +16,11 @@ type OnClickFocusEvent =
   | React.FocusEvent<HTMLInputElement>
   | React.MouseEvent<HTMLInputElement>
 
-function EventsDropdown({
+function EventsSearchBar({
   historicalEvents,
   searchText,
   setSearchText
-}: EventsDropdownProps) {
+}: EventsSearchBarProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
@@ -135,4 +135,4 @@ function EventsDropdown({
   )
 }
 
-export { EventsDropdown }
+export { EventsSearchBar }
