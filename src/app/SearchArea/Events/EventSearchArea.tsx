@@ -1,26 +1,26 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { LocationSearchButton } from '@/app/Buttons/LocationSearchButton'
-import { EventsSearchBar } from '@/app/SearchArea/Events/EventsSearchBar'
+import { EventSearchBar } from '@/app/SearchArea/Events/EventSearchBar'
 import { HistoricalEvent } from '@/types/historicalEvent'
 
-interface EventsSearchAreaProps {
+interface EventSearchAreaProps {
   historicalEvents: HistoricalEvent[]
   searchText: string
   setSearchText: Dispatch<SetStateAction<string>>
 }
 
-function EventsSearchArea({
+function EventSearchArea({
   historicalEvents,
   searchText,
   setSearchText
-}: EventsSearchAreaProps) {
+}: EventSearchAreaProps) {
   return (
     <>
-      <EventsSearchBar {...{ historicalEvents, searchText, setSearchText }} />
+      <EventSearchBar {...{ historicalEvents, searchText, setSearchText }} />
       <LocationSearchButton />
     </>
   )
 }
 
-export { EventsSearchArea }
+export { EventSearchArea }
