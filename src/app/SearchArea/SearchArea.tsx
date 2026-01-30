@@ -1,7 +1,7 @@
 import { useCombobox } from '@mantine/core'
 import { useState } from 'react'
 
-import { ResetMapButton } from '@/app/Buttons/ResetMapButton'
+import { ResetMapButton } from '@/app/Button/ResetMapButton'
 import { EventSearchArea } from '@/app/SearchArea/Events/EventSearchArea'
 import { LocationSearchArea } from '@/app/SearchArea/Locations/LocationSearchArea'
 import { useStateStore } from '@/providers/storeProvider'
