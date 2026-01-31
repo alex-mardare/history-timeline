@@ -1,18 +1,19 @@
+import 'leaflet/dist/leaflet.css'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
+
 import React from 'react'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { EventMarkers } from '@/app/EventMarkers'
-import { SearchArea } from '@/app/SearchArea/SearchArea'
 import { MapController } from '@/app/MapController'
+import { SearchArea } from '@/app/SearchArea/SearchArea'
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
+import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types/historicalEvent'
 
-import 'leaflet/dist/leaflet.css'
-import 'leaflet.markercluster/dist/MarkerCluster.css'
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import styles from './EventsMap.module.css'
-import { useStateStore } from '@/providers/storeProvider'
 
 interface EventsMapContainerProps {
   historicalEvents: HistoricalEvent[]

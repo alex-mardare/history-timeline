@@ -1,7 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 
-import { HistoricalEvent } from '@/types/historicalEvent'
 import { SearchType } from '@/types/enums'
+import { HistoricalEvent } from '@/types/historicalEvent'
 import { MapCenter } from '@/types/mapInterfaces'
 
 export type Actions = {

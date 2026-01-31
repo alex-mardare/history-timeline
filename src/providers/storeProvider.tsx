@@ -1,9 +1,9 @@
 'use client'
 
-import { type ReactNode, createContext, useState, useContext } from 'react'
+import { createContext, type ReactNode, useContext,useState } from 'react'
 import { useStore } from 'zustand'
 
-import { type Store, createStateStore } from '@/hooks/globalStore'
+import { createStateStore,type Store } from '@/hooks/globalStore'
 
 export type StoreApi = ReturnType<typeof createStateStore>
 export interface StoreProviderProps {
