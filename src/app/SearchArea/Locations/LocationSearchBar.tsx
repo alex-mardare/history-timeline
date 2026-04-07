@@ -14,6 +14,8 @@ import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'
 import { Location } from '@/types/location'
+import { filterDuplicateLocations } from '@/utils/locationFilters'
+import { mapLocationSubLabel } from '@/utils/locationMapper'
 
 interface LocationSearchBarProps {
   searchText: string
@@ -77,10 +79,8 @@ function LocationSearchBar({
 
   const renderComboboxOptions = () => {
     if (locations.length > 0) {
-      return locations.map((location: Location) => {
-        const subLabel = [location.name, location.state, location.country]
-          .filter((val) => val && val !== location.name)
-          .join(', ')
+      return filterDuplicateLocations(locations).map((location: Location) => {
+        const subLabel = mapLocationSubLabel(location)
         return (
           <Combobox.Option
             key={location.id}

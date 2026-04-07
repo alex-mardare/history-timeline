@@ -6,6 +6,7 @@ interface Location {
   latitude: number
   longitude: number
   name: string
+  osm_type: osm_type
   state: string
   type: string
 }
@@ -15,12 +16,14 @@ interface PhotonLocation {
     coordinates: number[]
   }
   properties: {
+    county: string
     country: string
     name: string
     osm_id: number
     osm_type: osm_type
     osm_value: string
     state: string
+    type: string
   }
 }
 

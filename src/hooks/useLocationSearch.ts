@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction, useRef } from 'react'
 
-import { ACCEPTED_OSM_TYPES, URL } from '@/constants/constants'
+import { URL } from '@/constants/constants'
 import type { Location, PhotonLocation } from '@/types/location'
+import { filterLocationTypeByCountry } from '@/utils/locationFilters'
+import { mapPhotonLocation } from '@/utils/locationMapper'
 
 export const useLocationSearch = (
   setLocations: Dispatch<SetStateAction<Location[]>>
@@ -23,21 +25,10 @@ export const useLocationSearch = (
 
       const data = await response.json()
       data.features.forEach((feature: PhotonLocation) => {
-        if (
-          ACCEPTED_OSM_TYPES.includes(feature.properties.osm_value) &&
-          feature.properties.osm_type !== 'N'
-        ) {
+        if (!!filterLocationTypeByCountry(feature)) {
           setLocations((prevLocations: Location[]) => [
             ...prevLocations,
-            {
-              country: feature.properties.country,
-              id: feature.properties.osm_id,
-              latitude: feature.geometry.coordinates[1],
-              longitude: feature.geometry.coordinates[0],
-              name: feature.properties.name,
-              state: feature.properties.state,
-              type: feature.properties.osm_value
-            }
+            mapPhotonLocation(feature)
           ])
         }
       })
