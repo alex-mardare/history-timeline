@@ -1,9 +1,9 @@
-import {
-  ACCEPTED_OSM_VALUES,
-  COUNTRIES,
-  PHOTON_LOCATION_TYPES
-} from '@/constants/constants'
+import { COUNTRIES } from '@/constants/constants'
+import { ACCEPTED_OSM_VALUES } from '@/constants/osmValue'
+import { PHOTON_LOCATION_TYPES } from '@/constants/photonLocationType'
 import { Location, PhotonLocation } from '@/types/location'
+
+import { isValueInSet } from './isTypeInSubset'
 
 const mapPhotonLocation = (location: PhotonLocation) => {
   let state = ''
@@ -81,14 +81,14 @@ const mapPhotonLocation = (location: PhotonLocation) => {
         location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND) ||
       (location.properties.country === COUNTRIES.PORTUGAL &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.ARCHIPELAGO) ||
-      [
+      isValueInSet(location.properties.osm_value, [
         ACCEPTED_OSM_VALUES.ADMINISTRATIVE,
         ACCEPTED_OSM_VALUES.COUNTY,
         ACCEPTED_OSM_VALUES.DISTRICT,
         ACCEPTED_OSM_VALUES.PROVINCE,
         ACCEPTED_OSM_VALUES.REGION,
         ACCEPTED_OSM_VALUES.TERRITORY
-      ].includes(location.properties.osm_value)
+      ])
     ) {
       return ACCEPTED_OSM_VALUES.STATE
     } else {
@@ -110,13 +110,13 @@ const mapPhotonLocation = (location: PhotonLocation) => {
 
 const mapLocationSubLabel = (location: Location) => {
   if (
-    [
+    isValueInSet(location.type.toLowerCase(), [
       ACCEPTED_OSM_VALUES.VILLAGE,
       ACCEPTED_OSM_VALUES.TOWN,
       ACCEPTED_OSM_VALUES.MUNICIPALITY,
       ACCEPTED_OSM_VALUES.CITY,
       ACCEPTED_OSM_VALUES.LOCALITY
-    ].includes(location.type.toLowerCase())
+    ])
   ) {
     return [location.state ?? null, location.country]
       .filter((loc) => !!loc)

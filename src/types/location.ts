@@ -1,3 +1,6 @@
+import { OsmValue } from '@/constants/osmValue'
+import { PhotonLocationType } from '@/constants/photonLocationType'
+
 type osm_type = 'N' | 'R' | 'W'
 
 interface Location {
@@ -21,9 +24,9 @@ interface PhotonLocation {
     name: string
     osm_id: number
     osm_type: osm_type
-    osm_value: string
+    osm_value: OsmValue
     state: string
-    type: string
+    type: PhotonLocationType
   }
 }
 
