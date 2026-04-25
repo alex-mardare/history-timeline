@@ -107,15 +107,6 @@ const VIL_CIT_STA_COU = [
   ACCEPTED_OSM_VALUES.COUNTRY
 ] as const
 
-const VIL_TOW_CIT_ISL_STA_COU = [
-  ACCEPTED_OSM_VALUES.VILLAGE,
-  ACCEPTED_OSM_VALUES.TOWN,
-  ACCEPTED_OSM_VALUES.CITY,
-  ACCEPTED_OSM_VALUES.ISLAND,
-  ACCEPTED_OSM_VALUES.STATE,
-  ACCEPTED_OSM_VALUES.COUNTRY
-] as const
-
 const VIL_TOW_MUN_REG_COU_COU = [
   ACCEPTED_OSM_VALUES.VILLAGE,
   ACCEPTED_OSM_VALUES.TOWN,
@@ -134,17 +125,35 @@ const VIL_TOW_CIT_STA_REG_COU = [
   ACCEPTED_OSM_VALUES.COUNTRY
 ] as const
 
-const VIL_TOW_CIT_DIS_COU = [
+const VIL_TOW_CIT_DIS_REG_COU = [
   ACCEPTED_OSM_VALUES.VILLAGE,
   ACCEPTED_OSM_VALUES.TOWN,
   ACCEPTED_OSM_VALUES.CITY,
   ACCEPTED_OSM_VALUES.DISTRICT,
+  ACCEPTED_OSM_VALUES.REGION,
   ACCEPTED_OSM_VALUES.COUNTRY
 ] as const
 
 const VIL_TOW_COU = [
   ACCEPTED_OSM_VALUES.VILLAGE,
   ACCEPTED_OSM_VALUES.TOWN,
+  ACCEPTED_OSM_VALUES.COUNTRY
+] as const
+
+const VIL_MUN_REG_STA_COU = [
+  ACCEPTED_OSM_VALUES.VILLAGE,
+  ACCEPTED_OSM_VALUES.MUNICIPALITY,
+  ACCEPTED_OSM_VALUES.REGION,
+  ACCEPTED_OSM_VALUES.STATE,
+  ACCEPTED_OSM_VALUES.COUNTRY
+] as const
+
+const TOW_COU = [ACCEPTED_OSM_VALUES.TOWN, ACCEPTED_OSM_VALUES.COUNTRY] as const
+
+const VIL_TOW_LOC_COU = [
+  ACCEPTED_OSM_VALUES.VILLAGE,
+  ACCEPTED_OSM_VALUES.TOWN,
+  ACCEPTED_OSM_VALUES.LOCALITY,
   ACCEPTED_OSM_VALUES.COUNTRY
 ] as const
 
@@ -167,6 +176,13 @@ const filterDuplicateLocations = (locations: Location[]): Location[] => {
 }
 
 const filterLocationTypeByCountry = (location: PhotonLocation) => {
+  // Exclude territories that have partial international recognition
+  if (
+    location.properties.osm_value === ACCEPTED_OSM_VALUES.COUNTRY &&
+    location.properties.name !== location.properties.country
+  ) {
+    return null
+  }
   switch (location.properties.country) {
     case 'Afghanistan':
     case 'Angola':
@@ -176,6 +192,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Bangladesh':
     case 'Belarus':
     case 'Benin':
+    case 'Bermuda':
     case 'Bhutan':
     case 'Bolivia':
     case 'Botswana':
@@ -243,7 +260,6 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Azerbaijan':
     case COUNTRIES.BARBADOS:
     case COUNTRIES.CAPE_VERDE:
-    case COUNTRIES.CYPRUS:
     case COUNTRIES.ESTONIA:
     case COUNTRIES.GRENADA:
     case COUNTRIES.ICELAND:
@@ -255,7 +271,8 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case COUNTRIES.RWANDA:
     case COUNTRIES.SAO_TOME:
     case COUNTRIES.SEYCHELLES:
-    case COUNTRIES.ST_VINCENT_GRENADINES: {
+    case COUNTRIES.ST_VINCENT_GRENADINES:
+    case COUNTRIES.TURKS_CAICOS: {
       if (
         (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
           location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
@@ -273,6 +290,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Bulgaria':
     case 'Cambodia':
     case 'Comoros':
+    case 'Cook Islands':
     case 'Cuba':
     case 'Czechia':
     case 'Denmark':
@@ -333,10 +351,16 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
+    case 'Anguilla':
+    case 'San Marino': {
+      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_COU)) {
+        return location
+      }
+      break
+    }
     case 'Argentina':
     case 'Colombia':
     case 'Equatorial Guinea':
-    case 'France':
     case 'Georgia':
     case 'India':
     case 'Indonesia':
@@ -368,17 +392,18 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
+    case 'British Virgin Islands':
     case COUNTRIES.BRUNEI:
     case COUNTRIES.KOSOVO: {
       if (
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_MUN_DIS_COU)
       ) {
-        console.log(location)
         return location
       }
       break
     }
     case 'Burkina Faso':
+    case 'Faroe Islands':
     case 'Senegal':
     case COUNTRIES.ST_KITTS_NEVIS: {
       if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_REG_COU)) {
@@ -399,6 +424,18 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Turkmenistan': {
       if (
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_PRO_STA_COU)
+      ) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.CAYMAN:
+    case COUNTRIES.EL_SALVADOR:
+    case 'South Georgia and the South Sandwich Islands': {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.DISTRICT &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        isValueInSet(location.properties.osm_value, VIL_STA_COU)
       ) {
         return location
       }
@@ -426,36 +463,82 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
-    case COUNTRIES.EL_SALVADOR: {
+    case COUNTRIES.CYPRUS:
+    case COUNTRIES.NORWAY: {
       if (
-        (location.properties.osm_value === ACCEPTED_OSM_VALUES.DISTRICT &&
-          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
-        isValueInSet(location.properties.osm_value, VIL_STA_COU)
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_MUN_REG_COU_COU)
       ) {
         return location
       }
       break
     }
-    case COUNTRIES.MICRONESIA: {
+    case COUNTRIES.FRANCE: {
       if (
-        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND &&
-          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        ((location.properties.osm_value === ACCEPTED_OSM_VALUES.ARCHIPELAGO ||
+          location.properties.osm_value ===
+            ACCEPTED_OSM_VALUES.ADMINISTRATIVE) &&
+          location.properties.type === PHOTON_LOCATION_TYPES.STATE) ||
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_STA_COU)
       ) {
         return location
       }
       break
     }
+    case 'Gibraltar':
+    case 'North Macedonia':
+    case 'Singapore': {
+      if (isValueInSet(location.properties.osm_value, VIL_CIT_COU)) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.GREENLAND:
+    case COUNTRIES.LATVIA: {
+      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_MUN_COU)) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.GUERNSEY:
+    case 'Niue':
+    case 'Tokelau':
+    case COUNTRIES.TUVALU: {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_COU)
+      ) {
+        return location
+      }
+      break
+    }
     case 'Honduras':
-    case 'Nicaragua':
     case 'Slovenia': {
       if (isValueInSet(location.properties.osm_value, VIL_MUN_STA_COU)) {
         return location
       }
       break
     }
-    case COUNTRIES.LATVIA: {
-      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_MUN_COU)) {
+    case COUNTRIES.ISLE_OF_MAN: {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
+        isValueInSet(location.properties.osm_value, VIL_CIT_COU)
+      ) {
+        return location
+      }
+      break
+    }
+    case 'Jersey': {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.VILLAGE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        isValueInSet(location.properties.osm_value, TOW_COU)
+      ) {
         return location
       }
       break
@@ -484,8 +567,36 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
+    case COUNTRIES.MICRONESIA: {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_CIT_STA_COU)
+      ) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.MOLDOVA: {
+      if (
+        isValueInSet(location.properties.osm_value, VIL_TOW_CIT_DIS_REG_COU)
+      ) {
+        return location
+      }
+      break
+    }
     case 'Monaco': {
       if (isValueInSet(location.properties.osm_value, CIT_COU)) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.MONTSERRAT: {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_LOC_COU)
+      ) {
         return location
       }
       break
@@ -502,7 +613,9 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     }
     case COUNTRIES.NETHERLANDS: {
       if (
-        isValueInSet(location.properties.osm_value, VIL_TOW_CIT_ISL_STA_COU)
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_CIT_STA_COU)
       ) {
         return location
       }
@@ -518,17 +631,8 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
-    case 'North Macedonia':
-    case 'Singapore': {
-      if (isValueInSet(location.properties.osm_value, VIL_CIT_COU)) {
-        return location
-      }
-      break
-    }
-    case COUNTRIES.NORWAY: {
-      if (
-        isValueInSet(location.properties.osm_value, VIL_TOW_MUN_REG_COU_COU)
-      ) {
+    case 'Nicaragua': {
+      if (isValueInSet(location.properties.osm_value, VIL_MUN_REG_STA_COU)) {
         return location
       }
       break
@@ -553,33 +657,11 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
-    case COUNTRIES.MOLDOVA: {
-      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_DIS_COU)) {
-        return location
-      }
-      break
-    }
-    case 'San Marino': {
-      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT_COU)) {
-        return location
-      }
-      break
-    }
     case COUNTRIES.SWEDEN: {
       if (
         (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
           location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_MUN_COU)
-      ) {
-        return location
-      }
-      break
-    }
-    case COUNTRIES.TUVALU: {
-      if (
-        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
-          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
-        isValueInSet(location.properties.osm_value, VIL_TOW_COU)
       ) {
         return location
       }

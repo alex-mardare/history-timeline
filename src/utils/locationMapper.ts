@@ -36,8 +36,17 @@ const mapPhotonLocation = (location: PhotonLocation) => {
     case COUNTRIES.ST_KITTS_NEVIS:
     case COUNTRIES.ST_VINCENT_GRENADINES:
     case COUNTRIES.SWEDEN:
-    case COUNTRIES.TAIWAN: {
+    case COUNTRIES.TAIWAN:
+    case COUNTRIES.TURKS_CAICOS: {
       state = location.properties.county
+      break
+    }
+    case COUNTRIES.NETHERLANDS: {
+      if (
+        location.properties.osm_value !== ACCEPTED_OSM_VALUES.ADMINISTRATIVE
+      ) {
+        state = location.properties.state
+      }
       break
     }
     case COUNTRIES.PORTUGAL: {
@@ -58,7 +67,8 @@ const mapPhotonLocation = (location: PhotonLocation) => {
     if (
       (location.properties.country === COUNTRIES.CHINA &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.REGION) ||
-      (location.properties.country === COUNTRIES.EL_SALVADOR &&
+      ((location.properties.country === COUNTRIES.EL_SALVADOR ||
+        location.properties.country === COUNTRIES.CAYMAN) &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.DISTRICT) ||
       ((location.properties.country === COUNTRIES.JAPAN ||
         location.properties.country === COUNTRIES.OMAN) &&
@@ -67,20 +77,26 @@ const mapPhotonLocation = (location: PhotonLocation) => {
       ((location.properties.country === COUNTRIES.MARSHALL_ISLANDS ||
         location.properties.country === COUNTRIES.MICRONESIA) &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND) ||
-      ((location.properties.country === COUNTRIES.NEPAL ||
+      ((location.properties.country === COUNTRIES.GUERNSEY ||
+        location.properties.country === COUNTRIES.NETHERLANDS ||
+        location.properties.country === COUNTRIES.NEPAL ||
         location.properties.country === COUNTRIES.TUVALU) &&
-        location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE)
+        location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE) ||
+      (location.properties.country === COUNTRIES.ISLE_OF_MAN &&
+        location.properties.type === PHOTON_LOCATION_TYPES.CITY)
     ) {
       return ACCEPTED_OSM_VALUES.CITY
     } else if (
-      (location.properties.country === COUNTRIES.LATVIA &&
+      ((location.properties.country === COUNTRIES.LATVIA ||
+        location.properties.country === COUNTRIES.GREENLAND) &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.MUNICIPALITY) ||
       (location.properties.country === COUNTRIES.MAURITIUS &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND) ||
-      (location.properties.country === COUNTRIES.NETHERLANDS &&
-        location.properties.osm_value === ACCEPTED_OSM_VALUES.ISLAND) ||
-      (location.properties.country === COUNTRIES.PORTUGAL &&
+      ((location.properties.country === COUNTRIES.PORTUGAL ||
+        location.properties.country === COUNTRIES.FRANCE) &&
         location.properties.osm_value === ACCEPTED_OSM_VALUES.ARCHIPELAGO) ||
+      (location.properties.country === COUNTRIES.ISLE_OF_MAN &&
+        location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
       isValueInSet(location.properties.osm_value, [
         ACCEPTED_OSM_VALUES.ADMINISTRATIVE,
         ACCEPTED_OSM_VALUES.COUNTY,
