@@ -1,5 +1,4 @@
 import { IconLocation } from '@tabler/icons-react'
-import React from 'react'
 
 import { ActionIconButton } from '@/app/Buttons/action-icon-button/ActionIconButton'
 import { useStateStore } from '@/providers/storeProvider'

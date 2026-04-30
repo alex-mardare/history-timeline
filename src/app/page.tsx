@@ -18,7 +18,7 @@ function Home() {
   const { setEventsCalculatedCenter, setMapCenter } = useStateStore(
     (state) => state
   )
-  const { historicalEvents, error } = useSelectHistoricalEvents()
+  const { historicalEvents, isLoading } = useSelectHistoricalEvents()
 
   useEffect(() => {
     const calculatedCenter = calculateMapCenter(historicalEvents)
@@ -26,12 +26,7 @@ function Home() {
     setEventsCalculatedCenter(calculatedCenter)
   }, [historicalEvents, setEventsCalculatedCenter, setMapCenter])
 
-  return (
-    error === null &&
-    historicalEvents.length > 0 && (
-      <DynamicEventsMap {...{ historicalEvents }} />
-    )
-  )
+  return <>{!isLoading && <DynamicEventsMap {...{ historicalEvents }} />}</>
 }
 
 export default Home

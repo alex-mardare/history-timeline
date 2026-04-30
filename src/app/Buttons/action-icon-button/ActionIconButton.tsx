@@ -1,5 +1,4 @@
 import { ActionIcon, Tooltip } from '@mantine/core'
-import React from 'react'
 
 import styles from './ActionIconButton.module.css'
 

@@ -1,6 +1,8 @@
 'use client'
 
+import { notifications } from '@mantine/notifications'
 import { PostgrestError } from '@supabase/supabase-js'
+import { IconExclamationCircleFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
 import { useStateStore } from '@/providers/storeProvider'
@@ -12,11 +14,13 @@ export const useSelectHistoricalEvents = () => {
     []
   )
   const [error, setError] = useState<PostgrestError | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const { addHistoricalEventToMap } = useStateStore((state) => state)
 
   useEffect(() => {
-    async function selectRows() {
+    async function selectHistoricalEvents() {
+      setIsLoading(true)
       const { data, error } = await supabaseClient
         .from('historical_events')
         .select(
@@ -30,6 +34,19 @@ export const useSelectHistoricalEvents = () => {
         .not('longitude', 'is', null)
       if (error) {
         setError(error)
+        const handleNoData = () => {
+          notifications.show({
+            autoClose: 300000,
+            color: 'red',
+            icon: <IconExclamationCircleFilled />,
+            message:
+              'There was an issue loading the historical events. Please try again later.',
+            position: 'top-right',
+            title: 'Problems loading the data',
+            withCloseButton: true
+          })
+        }
+        handleNoData()
       } else {
         if (data) {
           data.forEach((event: HistoricalEvent) => {
@@ -40,8 +57,8 @@ export const useSelectHistoricalEvents = () => {
       }
     }
 
-    selectRows()
+    selectHistoricalEvents().finally(() => setIsLoading(false))
   }, [addHistoricalEventToMap])
 
-  return { historicalEvents, error }
+  return { historicalEvents, isLoading, error }
 }

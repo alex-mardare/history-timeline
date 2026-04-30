@@ -6,7 +6,15 @@ const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {
   let mapCenterLatitude: number = 0
   let mapCenterLongitude: number = 0
 
-  const coordinatesEvents = events.filter(
+  if (events.length === 0 || events === null) {
+    return {
+      lat: mapCenterLatitude,
+      lng: mapCenterLongitude,
+      zoom: MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL
+    }
+  }
+
+  const coordinatesEvents = events?.filter(
     (event: HistoricalEvent) => event.latitude && event.longitude
   )
 

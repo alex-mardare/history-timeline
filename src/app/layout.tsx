@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 import './globals.css'
 
 import {
@@ -6,6 +7,7 @@ import {
   mantineHtmlProps,
   MantineProvider
 } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
@@ -39,6 +41,7 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <MantineProvider>
+          <Notifications />
           <StoreProvider>{children}</StoreProvider>
         </MantineProvider>
       </body>

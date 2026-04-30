@@ -2,7 +2,6 @@ import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
-import React from 'react'
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
@@ -27,7 +26,7 @@ function EventsMap({
     <>
       <SearchArea {...{ historicalEvents }} />
       <MapContainer
-        center={[mapCenter.lat, mapCenter.lng]}
+        center={[mapCenter?.lat, mapCenter?.lng]}
         className={styles['events-map-container']}
         zoom={MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL}
         zoomControl={false}
