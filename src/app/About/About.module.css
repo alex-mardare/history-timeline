@@ -1,0 +1,15 @@
+.about-content {
+  bottom: 20;
+  left: 20;
+  position: fixed;
+  z-index: 1000;
+}
+
+.modal-header {
+  text-align: center;
+  width: 100%;
+}
+
+.tab-panel {
+  padding-top: 10px;
+}

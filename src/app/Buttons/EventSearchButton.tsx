@@ -14,7 +14,7 @@ function EventSearchButton() {
     <ActionIconButton
       Icon={IconMapPin}
       label="Search by events"
-      onClick={onClick}
+      {...{ onClick }}
     />
   )
 }
