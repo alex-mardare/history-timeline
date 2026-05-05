@@ -8,6 +8,7 @@ import {
   MantineProvider
 } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
+import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         <MantineProvider>
           <Notifications />
           <StoreProvider>{children}</StoreProvider>
+          <Analytics />
         </MantineProvider>
       </body>
     </html>
