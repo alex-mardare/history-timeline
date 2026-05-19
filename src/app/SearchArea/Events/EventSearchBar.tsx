@@ -1,10 +1,20 @@
-import { CloseButton, Combobox, InputBase, useCombobox } from '@mantine/core'
+import {
+  CloseButton,
+  Combobox,
+  Group,
+  Image,
+  InputBase,
+  Text,
+  useCombobox
+} from '@mantine/core'
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types/historicalEvent'
+
+import styles from './EventSearchBar.module.css'
 
 interface EventSearchBarProps {
   historicalEvents: HistoricalEvent[]
@@ -92,7 +102,14 @@ function EventSearchBar({
           }}
           value={option.name}
         >
-          {option.name}
+          <Group justify="space-between">
+            <Text size="sm">{option.name}</Text>
+            <Image
+              alt="Historical event flag"
+              className={styles['option-flag']}
+              src={`/assets/flags/${option.presentCountry?.name}.png`}
+            ></Image>
+          </Group>
         </Combobox.Option>
       ))
     } else {
