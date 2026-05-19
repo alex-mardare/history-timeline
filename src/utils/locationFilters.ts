@@ -585,7 +585,8 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
-    case 'Monaco': {
+    case 'Monaco':
+    case 'Vatican City': {
       if (isValueInSet(location.properties.osm_value, CIT_COU)) {
         return location
       }
