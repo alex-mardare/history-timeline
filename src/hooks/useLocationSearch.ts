@@ -20,7 +20,7 @@ export const useLocationSearch = (
     abortControllerRef.current = abortController
     try {
       const response = await fetch(
-        URL.PHOTOM_KOMOOT + '?q=' + locationName + '&limit=10'
+        URL.PHOTON_KOMOOT + '?q=' + locationName + '&limit=10'
       )
 
       const data = await response.json()

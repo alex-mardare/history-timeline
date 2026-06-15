@@ -58,7 +58,7 @@ const MAP_ZOOM_LEVEL = {
 }
 
 const URL = {
-  PHOTOM_KOMOOT: 'https://photon.komoot.io/api/'
+  PHOTON_KOMOOT: 'https://photon.komoot.io/api/'
 }
 
 export { COUNTRIES, DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL, URL }
