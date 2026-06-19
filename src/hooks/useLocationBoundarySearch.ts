@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Location } from '@/types/location'
+import { Location } from '@/types'
 
 const useLocationBoundarySearch = () => {
   const abortControllerRef = useRef<AbortController | null>(null)

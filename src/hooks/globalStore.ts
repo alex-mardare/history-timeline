@@ -1,9 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 
-import { SearchType } from '@/types/enums'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent, MapCenter, SearchType } from '@/types'
 import { LocationBoundary } from '@/types/location'
-import { MapCenter } from '@/types/mapInterfaces'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void

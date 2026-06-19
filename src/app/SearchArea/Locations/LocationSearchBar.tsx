@@ -14,7 +14,7 @@ import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'
-import { Location, LocationBoundary } from '@/types/location'
+import { Location, LocationBoundary } from '@/types'
 import { filterDuplicateLocations } from '@/utils/locationFilters'
 import { mapLocationSubLabel } from '@/utils/locationMapper'
 

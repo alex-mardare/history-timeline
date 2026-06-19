@@ -7,4 +7,4 @@ interface MapCenter extends Coordinates {
   zoom: number
 }
 
-export type { Coordinates, MapCenter }
+export type { MapCenter }

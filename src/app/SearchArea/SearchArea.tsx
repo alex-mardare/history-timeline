@@ -5,7 +5,7 @@ import { ResetMapButton } from '@/app/Buttons/ResetMapButton'
 import { EventSearchArea } from '@/app/SearchArea/Events/EventSearchArea'
 import { LocationSearchArea } from '@/app/SearchArea/Locations/LocationSearchArea'
 import { useStateStore } from '@/providers/storeProvider'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent } from '@/types'
 
 import styles from './SearchArea.module.css'
 

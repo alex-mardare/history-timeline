@@ -10,7 +10,7 @@ import { MapController } from '@/app/MapController'
 import { SearchArea } from '@/app/SearchArea/SearchArea'
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent } from '@/types'
 
 import styles from './EventsMap.module.css'
 

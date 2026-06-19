@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 
 import { mapPopupIcon } from '@/constants/mapPopupIcon'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent } from '@/types'
 
 interface EventMarkersComponentProps {
   historicalEvents: HistoricalEvent[]

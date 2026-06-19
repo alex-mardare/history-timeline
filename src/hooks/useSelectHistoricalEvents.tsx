@@ -6,7 +6,7 @@ import { IconExclamationCircleFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
 import { useStateStore } from '@/providers/storeProvider'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent } from '@/types'
 import { supabaseClient } from '@/utils/supabaseClient'
 
 export const useSelectHistoricalEvents = () => {

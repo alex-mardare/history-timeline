@@ -12,7 +12,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
-import { HistoricalEvent } from '@/types/historicalEvent'
+import { HistoricalEvent } from '@/types'
 
 import styles from './EventSearchBar.module.css'
 
