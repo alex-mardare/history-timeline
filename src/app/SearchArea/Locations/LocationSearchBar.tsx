@@ -11,9 +11,10 @@ import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
 import { MAP_ZOOM_LEVEL } from '@/constants/constants'
+import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'
-import { Location } from '@/types/location'
+import { Location, LocationBoundary } from '@/types/location'
 import { filterDuplicateLocations } from '@/utils/locationFilters'
 import { mapLocationSubLabel } from '@/utils/locationMapper'
 
@@ -33,19 +34,34 @@ function LocationSearchBar({
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { setMapCenter } = useStateStore((state) => state)
+  const { setLocationBoundary, setMapCenter } = useStateStore((state) => state)
   const [locations, setLocations] = useState<Location[]>([])
+  const { searchLocationBoundary } = useLocationBoundarySearch()
   const { searchLocations } = useLocationSearch(setLocations)
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const centerMapOnEvent = (latitude: number, longitude: number) => {
+  const centerMapOnLocation = (latitude: number, longitude: number) => {
     setMapCenter({
       lat: latitude,
       lng: longitude,
       zoom: MAP_ZOOM_LEVEL.LOCATION_ZOOM_LEVEL
     })
   }
+
+  const loadLocationLimits = (location: Location) => {
+    searchLocationBoundary(location).then((result) => {
+      if (result.length > 0) {
+        const locationBoundary: LocationBoundary = {
+          coordinates: result[0].geojson.coordinates,
+          osm_id: result[0].osm_id,
+          type: result[0].geojson.type
+        }
+        setLocationBoundary(locationBoundary)
+      }
+    })
+  }
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value
     if (searchValue.length > 0) {
@@ -66,12 +82,19 @@ function LocationSearchBar({
       setLocations([])
     }
   }
+
+  const onClickComboboxOption = (selectedLocation: Location) => {
+    centerMapOnLocation(selectedLocation.latitude, selectedLocation.longitude)
+    loadLocationLimits(selectedLocation)
+  }
+
   const onClickFocus = (event: OnClickFocusEvent) => {
     const targetElement = event.target as HTMLInputElement
     if (targetElement.value.length > 0) {
       comboboxStore.openDropdown()
     }
   }
+
   const onOptionSubmit = (value: string) => {
     setSearchText(value)
     comboboxStore.closeDropdown()
@@ -85,7 +108,7 @@ function LocationSearchBar({
           <Combobox.Option
             key={location.id}
             onClick={() => {
-              centerMapOnEvent(location.latitude, location.longitude)
+              onClickComboboxOption(location)
             }}
             value={location.name}
           >

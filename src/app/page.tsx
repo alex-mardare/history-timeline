@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
-import { About } from '@/app/About/About'
+import { About } from '@/app/about/About'
 import { useSelectHistoricalEvents } from '@/hooks/useSelectHistoricalEvents'
 import { useStateStore } from '@/providers/storeProvider'
 import { calculateMapCenter } from '@/utils/mapUtils'

@@ -5,7 +5,7 @@ import { Location, PhotonLocation } from '@/types/location'
 
 import { isValueInSet } from './isTypeInSubset'
 
-const mapPhotonLocation = (location: PhotonLocation) => {
+const mapPhotonLocation = (location: PhotonLocation): Location => {
   let state = ''
   switch (location.properties.country) {
     case COUNTRIES.ALBANIA:
@@ -118,6 +118,7 @@ const mapPhotonLocation = (location: PhotonLocation) => {
     latitude: location.geometry.coordinates[1],
     longitude: location.geometry.coordinates[0],
     name: location.properties.name,
+    osm_id: location.properties.osm_id,
     osm_type: location.properties.osm_type,
     state: state,
     type: locationType()

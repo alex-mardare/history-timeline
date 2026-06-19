@@ -2,7 +2,7 @@ import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
+import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { EventMarkers } from '@/app/EventsMap/EventMarkers'
@@ -21,7 +21,8 @@ interface EventsMapContainerProps {
 function EventsMap({
   historicalEvents
 }: EventsMapContainerProps): React.JSX.Element {
-  const { mapCenter } = useStateStore((state) => state)
+  const { locationBoundary, mapCenter } = useStateStore((state) => state)
+
   return (
     <>
       <SearchArea {...{ historicalEvents }} />
@@ -41,6 +42,19 @@ function EventsMap({
         </MarkerClusterGroup>
         <ZoomControl position="topright" />
         <MapController />
+        {locationBoundary && (
+          <GeoJSON
+            data={locationBoundary}
+            key={locationBoundary.osm_id}
+            style={{
+              color: '#228be6',
+              weight: 3,
+              opacity: 1,
+              fillColor: '#228be6',
+              fillOpacity: 0.35
+            }}
+          />
+        )}
       </MapContainer>
     </>
   )

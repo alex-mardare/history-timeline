@@ -57,8 +57,9 @@ const MAP_ZOOM_LEVEL = {
   LOCATION_ZOOM_LEVEL: 11
 }
 
-const URL = {
+const URLs = {
+  NOMINATIM: 'https://nominatim.openstreetmap.org/lookup',
   PHOTON_KOMOOT: 'https://photon.komoot.io/api/'
 }
 
-export { COUNTRIES, DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL, URL }
+export { COUNTRIES, DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL, URLs }

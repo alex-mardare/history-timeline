@@ -9,14 +9,13 @@ interface ResetMapButtonProps {
 }
 
 function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
-  const { eventsCalculatedCenter, mapCenter, setMapCenter } = useStateStore(
-    (state) => state
-  )
+  const { eventsCalculatedCenter, mapCenter, setLocationBoundary } =
+    useStateStore((state) => state)
 
   const onClick = () => {
     if (searchText.length > 0 && eventsCalculatedCenter !== mapCenter) {
-      setMapCenter(eventsCalculatedCenter)
       resetSearchText()
+      setLocationBoundary(null)
     }
   }
 
