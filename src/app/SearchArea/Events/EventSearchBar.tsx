@@ -10,7 +10,7 @@ import {
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants/constants'
+import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 

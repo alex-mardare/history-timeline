@@ -1,4 +1,4 @@
-import { MAP_ZOOM_LEVEL } from '@/constants/constants'
+import { MAP_ZOOM_LEVEL } from '@/constants'
 import { HistoricalEvent, MapCenter } from '@/types'
 
 const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {

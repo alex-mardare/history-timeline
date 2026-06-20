@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from 'react'
 
-import { URLs } from '@/constants/constants'
+import { URLs } from '@/constants'
 import type { Location, PhotonLocation } from '@/types'
 import { filterLocationTypeByCountry } from '@/utils/locationFilters'
 import { mapPhotonLocation } from '@/utils/locationMapper'

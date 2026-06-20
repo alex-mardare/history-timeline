@@ -4,7 +4,4 @@ const PHOTON_LOCATION_TYPES = {
   STATE: 'state'
 } as const
 
-export type PhotonLocationType =
-  (typeof PHOTON_LOCATION_TYPES)[keyof typeof PHOTON_LOCATION_TYPES]
-
 export { PHOTON_LOCATION_TYPES }
