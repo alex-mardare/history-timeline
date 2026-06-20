@@ -8,7 +8,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster'
 import { EventMarkers } from '@/app/EventsMap/EventMarkers'
 import { MapController } from '@/app/MapController'
 import { SearchArea } from '@/app/SearchArea/SearchArea'
-import { MAP_ZOOM_LEVEL } from '@/constants'
+import { MAP_ZOOM_LEVEL } from '@/constants/constants'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 

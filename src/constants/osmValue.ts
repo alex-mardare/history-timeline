@@ -1,4 +1,4 @@
-const ACCEPTED_OSM_VALUES = {
+export const ACCEPTED_OSM_VALUES = {
   ADMINISTRATIVE: 'administrative',
   ARCHIPELAGO: 'archipelago',
   CITY: 'city',
@@ -16,4 +16,5 @@ const ACCEPTED_OSM_VALUES = {
   VILLAGE: 'village'
 } as const
 
-export { ACCEPTED_OSM_VALUES }
+export type OsmValue =
+  (typeof ACCEPTED_OSM_VALUES)[keyof typeof ACCEPTED_OSM_VALUES]

@@ -26,10 +26,6 @@ const eslintConfig = [
             {
               group: ['**/types/*', '!**/types/index'],
               message: "Please import the interfaces and types from '@/types'."
-            },
-            {
-              group: ['**/constants/*', '!**/constants/index'],
-              message: "Please import the constants from '@/constants'."
             }
           ]
         }

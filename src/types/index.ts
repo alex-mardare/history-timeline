@@ -1,4 +1,4 @@
-export type { OsmValue, PhotonLocationType, SearchType } from './enums'
+export type { SearchType } from './enums'
 export type { HistoricalEvent } from './historicalEvent'
 export type { Location, LocationBoundary, PhotonLocation } from './location'
 export type { MapCenter } from './mapInterfaces'

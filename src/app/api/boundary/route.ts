@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { URLs } from '@/constants'
+import { URLs } from '@/constants/constants'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
