@@ -1,7 +1,7 @@
 import { createStore } from 'zustand/vanilla'
 
 import { HistoricalEvent, MapCenter, SearchType } from '@/types'
-import { LocationBoundary } from '@/types/location'
+import { LocationBoundary } from '@/types'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void
