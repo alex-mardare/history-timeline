@@ -10,7 +10,7 @@ import {
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
-import { MAP_ZOOM_LEVEL } from '@/constants/constants'
+import { MAP_ZOOM_LEVEL } from '@/constants'
 import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'

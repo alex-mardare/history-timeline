@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 
-import { mapPopupIcon } from '@/constants/mapPopupIcon'
+import { mapPopupIcon } from '@/components/leaflet/mapPopupIcon'
 import { HistoricalEvent } from '@/types'
 
 interface EventMarkersComponentProps {
@@ -16,7 +16,7 @@ const EventMarkersComponent = ({
       {historicalEvents.map((event: HistoricalEvent) => (
         <Marker
           key={event.id}
-          icon={mapPopupIcon}
+          icon={mapPopupIcon()}
           position={[event.latitude as number, event.longitude as number]}
         >
           <Popup>

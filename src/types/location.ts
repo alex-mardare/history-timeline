@@ -1,7 +1,6 @@
 import { GeoJsonTypes } from 'geojson'
 
-import { OsmValue } from '@/constants/osmValue'
-import { PhotonLocationType } from '@/constants/photonLocationType'
+import { OsmValue, PhotonLocationType } from './enums'
 
 type osm_type = 'N' | 'R' | 'W'
 

@@ -1,6 +1,8 @@
-import { COUNTRIES } from '@/constants/constants'
-import { ACCEPTED_OSM_VALUES } from '@/constants/osmValue'
-import { PHOTON_LOCATION_TYPES } from '@/constants/photonLocationType'
+import {
+  ACCEPTED_OSM_VALUES,
+  COUNTRIES,
+  PHOTON_LOCATION_TYPES
+} from '@/constants'
 import { Location, PhotonLocation } from '@/types'
 
 import { isValueInSet } from './isTypeInSubset'
