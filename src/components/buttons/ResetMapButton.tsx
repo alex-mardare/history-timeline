@@ -1,6 +1,6 @@
 import { IconCircleX } from '@tabler/icons-react'
 
-import { ActionIconButton } from '@/app/Buttons/action-icon-button/ActionIconButton'
+import { ActionIconButton } from '@/components/buttons/action-icon-button/ActionIconButton'
 import { useStateStore } from '@/providers/storeProvider'
 
 interface ResetMapButtonProps {

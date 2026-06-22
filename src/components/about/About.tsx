@@ -2,7 +2,7 @@ import { Anchor, List, Modal, Stack, Tabs, TabsList, Text } from '@mantine/core'
 import { IconInfoCircle } from '@tabler/icons-react'
 import { useState } from 'react'
 
-import { ActionIconButton } from '@/app/Buttons/action-icon-button/ActionIconButton'
+import { ActionIconButton } from '@/components/buttons/action-icon-button/ActionIconButton'
 
 import styles from './About.module.css'
 

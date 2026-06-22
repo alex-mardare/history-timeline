@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 
-import { EventSearchButton } from '@/app/Buttons/EventSearchButton'
-import { LocationSearchBar } from '@/app/SearchArea/Locations/LocationSearchBar'
+import { EventSearchButton } from '@/components/buttons/EventSearchButton'
+import { LocationSearchBar } from '@/components/search-area/locations/LocationSearchBar'
 
 interface LocationSearchAreaProps {
   searchText: string

@@ -1,4 +1,4 @@
-@import '@/../../../globals.css';
+@import '@/../../../../app/globals.css';
 
 .action-icon-button {
   background-color: var(--button-background-colour);
