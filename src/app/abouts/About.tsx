@@ -54,11 +54,32 @@ function About() {
           <Tabs.Panel value="credits">
             <List size="md" spacing="md">
               <List.Item>
-                Flag icons provided by{' '}
+                Flag icons provided by a number of authors from{' '}
                 <Anchor href="https://www.flaticon.com" target="_blank">
                   Flaticon
-                </Anchor>{' '}
-                (various authors).
+                </Anchor>
+                :{' '}
+                <Anchor
+                  href="https://www.flaticon.com/authors/verluk"
+                  target="_blank"
+                >
+                  verluk
+                </Anchor>
+                {', '}
+                <Anchor
+                  href="https://www.flaticon.com/authors/freepik"
+                  target="_blank"
+                >
+                  Freepik
+                </Anchor>
+                {' and '}
+                <Anchor
+                  href="https://www.flaticon.com/authors/rimsha-ibrar"
+                  target="_blank"
+                >
+                  rimsha-ibrar
+                </Anchor>
+                .
               </List.Item>
               <List.Item>
                 Map engine:{' '}
