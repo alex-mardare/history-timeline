@@ -33,7 +33,7 @@ export const useLocationSearch = (
         }
       })
     } catch (error) {
-      console.log('Error:', error)
+      console.error('Could not load location data:', error)
     }
   }
 

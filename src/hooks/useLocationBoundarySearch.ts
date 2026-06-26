@@ -20,7 +20,7 @@ const useLocationBoundarySearch = () => {
       const data = await response.json()
       return data
     } catch (error) {
-      console.log('Error:', error)
+      console.error('Error loading the location GeoJSON:', error)
     }
   }
 

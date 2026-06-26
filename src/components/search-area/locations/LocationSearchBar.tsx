@@ -10,7 +10,6 @@ import {
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
-import { MAP_ZOOM_LEVEL } from '@/constants'
 import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'
@@ -34,20 +33,12 @@ function LocationSearchBar({
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { setLocationBoundary, setMapCenter } = useStateStore((state) => state)
+  const { setLocationBoundary } = useStateStore((state) => state)
   const [locations, setLocations] = useState<Location[]>([])
   const { searchLocationBoundary } = useLocationBoundarySearch()
   const { searchLocations } = useLocationSearch(setLocations)
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const centerMapOnLocation = (latitude: number, longitude: number) => {
-    setMapCenter({
-      lat: latitude,
-      lng: longitude,
-      zoom: MAP_ZOOM_LEVEL.LOCATION_ZOOM_LEVEL
-    })
-  }
 
   const loadLocationLimits = (location: Location) => {
     searchLocationBoundary(location).then((result) => {
@@ -84,7 +75,6 @@ function LocationSearchBar({
   }
 
   const onClickComboboxOption = (selectedLocation: Location) => {
-    centerMapOnLocation(selectedLocation.latitude, selectedLocation.longitude)
     loadLocationLimits(selectedLocation)
   }
 
