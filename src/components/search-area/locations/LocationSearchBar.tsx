@@ -40,6 +40,11 @@ function LocationSearchBar({
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+  const clearLocationSearch = () => {
+    setSearchText('')
+    setLocations([])
+  }
+
   const loadLocationLimits = (location: Location) => {
     searchLocationBoundary(location).then((result) => {
       if (result.length > 0) {
@@ -68,9 +73,8 @@ function LocationSearchBar({
         searchLocations(searchValue)
       }, 500)
     } else {
-      setSearchText('')
+      clearLocationSearch()
       comboboxStore.closeDropdown()
-      setLocations([])
     }
   }
 
@@ -137,7 +141,7 @@ function LocationSearchBar({
       return (
         <CloseButton
           aria-label="Clear value"
-          onClick={() => setSearchText('')}
+          onClick={() => clearLocationSearch()}
           onMouseDown={(
             event: React.MouseEvent<HTMLButtonElement, MouseEvent>
           ) => event.preventDefault()}
