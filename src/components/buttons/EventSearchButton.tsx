@@ -4,10 +4,11 @@ import { ActionIconButton } from '@/components/buttons/action-icon-button/Action
 import { useStateStore } from '@/providers/storeProvider'
 
 function EventSearchButton() {
-  const { setSearchType } = useStateStore((state) => state)
+  const { setSearchType, setLocationBoundary } = useStateStore((state) => state)
 
   const onClick = () => {
     setSearchType('event')
+    setLocationBoundary(null)
   }
 
   return (
