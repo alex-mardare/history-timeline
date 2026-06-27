@@ -17,15 +17,17 @@ function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
     setMapCenter
   } = useStateStore((state) => state)
 
+  const clearSearchText = () => {
+    return searchText.length > 0 && resetSearchText()
+  }
   const onClick = () => {
-    if (searchText.length > 0) {
-      resetSearchText()
-      if (eventsCalculatedCenter !== mapCenter) {
-        setMapCenter(eventsCalculatedCenter)
-      }
-      if (locationBoundary !== null) {
-        setLocationBoundary(null)
-      }
+    if (locationBoundary !== null) {
+      setLocationBoundary(null)
+      clearSearchText()
+    }
+    if (eventsCalculatedCenter !== mapCenter) {
+      setMapCenter(eventsCalculatedCenter)
+      clearSearchText()
     }
   }
 
