@@ -109,6 +109,11 @@ const mapPhotonLocation = (location: PhotonLocation): Location => {
       ])
     ) {
       return ACCEPTED_OSM_VALUES.STATE
+    } else if (
+      location.properties.country === COUNTRIES.BAHAMAS &&
+      location.properties.osm_value === ACCEPTED_OSM_VALUES.ARCHIPELAGO
+    ) {
+      return ACCEPTED_OSM_VALUES.COUNTRY
     } else {
       return location.properties.osm_value
     }

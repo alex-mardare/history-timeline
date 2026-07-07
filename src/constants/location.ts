@@ -18,11 +18,13 @@ const ACCEPTED_OSM_VALUES = {
 
 const COUNTRIES = {
   ALBANIA: 'Albania',
+  BAHAMAS: 'The Bahamas',
   BARBADOS: 'Barbados',
   BRUNEI: 'Brunei',
   CAPE_VERDE: 'Cape Verde',
   CAYMAN: 'Cayman Islands',
   CHINA: 'China',
+  CONGO: 'Congo-Brazzaville',
   CROATIA: 'Croatia',
   CYPRUS: 'Cyprus',
   EL_SALVADOR: 'El Salvador',
@@ -35,6 +37,7 @@ const COUNTRIES = {
   ICELAND: 'Iceland',
   IRELAND: 'Ireland',
   ISLE_OF_MAN: 'Isle of Man',
+  IVORY_COAST: "Côte d'Ivoire",
   JAMAICA: 'Jamaica',
   JAPAN: 'Japan',
   KOSOVO: 'Kosovo',
@@ -53,14 +56,16 @@ const COUNTRIES = {
   NETHERLANDS: 'Netherlands',
   NORWAY: 'Norway',
   OMAN: 'Oman',
-  PALESINE: 'Palestinian Territory',
+  PALESINE: 'Palestinian Territories',
   PORTUGAL: 'Portugal',
   ROMANIA: 'Romania',
   RWANDA: 'Rwanda',
+  SAMOA: 'Samoa',
   SAO_TOME: 'São Tomé and Príncipe',
   SEYCHELLES: 'Seychelles',
   ST_KITTS_NEVIS: 'Saint Kitts and Nevis',
   ST_VINCENT_GRENADINES: 'Saint Vincent and the Grenadines',
+  SOUTH_GEORGIA: 'South Georgia and the South Sandwich Islands',
   SWEDEN: 'Sweden',
   TAIWAN: 'Taiwan',
   TURKS_CAICOS: 'Turks and Caicos Islands',
@@ -69,6 +74,7 @@ const COUNTRIES = {
 
 const PHOTON_LOCATION_TYPES = {
   CITY: 'city',
+  COUNTRY: 'country',
   COUNTY: 'county',
   STATE: 'state'
 } as const

@@ -159,6 +159,12 @@ const VIL_TOW_LOC_COU = [
   ACCEPTED_OSM_VALUES.COUNTRY
 ] as const
 
+const VIL_TOW_CIT = [
+  ACCEPTED_OSM_VALUES.VILLAGE,
+  ACCEPTED_OSM_VALUES.TOWN,
+  ACCEPTED_OSM_VALUES.CITY
+] as const
+
 const filterDuplicateLocations = (locations: Location[]): Location[] => {
   const priority = { R: 1, W: 2, N: 3 }
   return locations
@@ -181,7 +187,13 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
   // Exclude territories that have partial international recognition
   if (
     location.properties.osm_value === ACCEPTED_OSM_VALUES.COUNTRY &&
-    location.properties.name !== location.properties.country
+    location.properties.name !== location.properties.country &&
+    !isValueInSet(location.properties.country, [
+      COUNTRIES.CONGO,
+      COUNTRIES.IVORY_COAST,
+      COUNTRIES.SAMOA,
+      COUNTRIES.SOUTH_GEORGIA
+    ])
   ) {
     return null
   }
@@ -203,7 +215,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Central African Republic':
     case 'Chad':
     case 'Chile':
-    case "Côte d'Ivoire":
+    case COUNTRIES.IVORY_COAST:
     case 'Democratic Republic of the Congo':
     case 'Djibouti':
     case 'Eritrea':
@@ -269,7 +281,6 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case COUNTRIES.LIECHTENSTEIN:
     case COUNTRIES.MONTENEGRO:
     case COUNTRIES.NAURU:
-    case COUNTRIES.PALESINE:
     case COUNTRIES.RWANDA:
     case COUNTRIES.SAO_TOME:
     case COUNTRIES.SEYCHELLES:
@@ -319,7 +330,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     case 'Panama':
     case 'Philippines':
     case 'Saint Lucia':
-    case 'Samoa':
+    case COUNTRIES.SAMOA:
     case 'Sierra Leone':
     case 'Slovakia':
     case 'Solomon Islands':
@@ -342,8 +353,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       break
     }
     case 'Andorra':
-    case 'Malta':
-    case 'The Bahamas': {
+    case 'Malta': {
       if (
         (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
           location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
@@ -385,7 +395,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     }
     case 'Australia':
     case 'Brazil':
-    case 'Congo-Brazzaville':
+    case COUNTRIES.CONGO:
     case 'Ecuador': {
       if (
         isValueInSet(location.properties.osm_value, VIL_MUN_CIT_STA_TER_COU)
@@ -433,7 +443,7 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
     }
     case COUNTRIES.CAYMAN:
     case COUNTRIES.EL_SALVADOR:
-    case 'South Georgia and the South Sandwich Islands': {
+    case COUNTRIES.SOUTH_GEORGIA: {
       if (
         (location.properties.osm_value === ACCEPTED_OSM_VALUES.DISTRICT &&
           location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
@@ -640,6 +650,12 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
       }
       break
     }
+    case COUNTRIES.PALESINE: {
+      if (isValueInSet(location.properties.osm_value, VIL_TOW_CIT)) {
+        return location
+      }
+      break
+    }
     case 'Paraguay': {
       if (
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_STA_REG_COU)
@@ -665,6 +681,18 @@ const filterLocationTypeByCountry = (location: PhotonLocation) => {
         (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
           location.properties.type === PHOTON_LOCATION_TYPES.COUNTY) ||
         isValueInSet(location.properties.osm_value, VIL_TOW_CIT_MUN_COU)
+      ) {
+        return location
+      }
+      break
+    }
+    case COUNTRIES.BAHAMAS: {
+      if (
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ADMINISTRATIVE &&
+          location.properties.type === PHOTON_LOCATION_TYPES.CITY) ||
+        (location.properties.osm_value === ACCEPTED_OSM_VALUES.ARCHIPELAGO &&
+          location.properties.type === PHOTON_LOCATION_TYPES.COUNTRY) ||
+        isValueInSet(location.properties.osm_value, VIL_TOW_CIT)
       ) {
         return location
       }
