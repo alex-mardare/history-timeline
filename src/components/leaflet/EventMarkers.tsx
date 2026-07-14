@@ -1,33 +1,18 @@
-import { memo } from 'react'
-import { Marker, Popup } from 'react-leaflet'
-
-import { mapPopupIcon } from '@/components/leaflet/mapPopupIcon'
+import { EventMarkerMemo } from '@/components/leaflet/EventMarker'
 import { HistoricalEvent } from '@/types'
 
 interface EventMarkersComponentProps {
   historicalEvents: HistoricalEvent[]
 }
 
-const EventMarkersComponent = ({
-  historicalEvents
-}: EventMarkersComponentProps) => {
+const EventMarkers = ({ historicalEvents }: EventMarkersComponentProps) => {
   return (
     <>
       {historicalEvents.map((event: HistoricalEvent) => (
-        <Marker
-          key={event.id}
-          icon={mapPopupIcon()}
-          position={[event.latitude as number, event.longitude as number]}
-        >
-          <Popup>
-            <b>{event.name}</b>
-            <br />
-            {event.description}
-          </Popup>
-        </Marker>
+        <EventMarkerMemo key={event.id} {...{ event }} />
       ))}
     </>
   )
 }
 
-export const EventMarkers = memo(EventMarkersComponent)
+export { EventMarkers }
