@@ -1,16 +1,22 @@
 import { createStore } from 'zustand/vanilla'
 
-import { HistoricalEvent, MapCenter, SearchType } from '@/types'
-import { LocationBoundary } from '@/types'
+import {
+  HistoricalEvent,
+  LocationBoundary,
+  MapCenter,
+  SearchType
+} from '@/types'
 
 export type Actions = {
   addHistoricalEventToMap: (historicalEvent: HistoricalEvent) => void
+  setActiveEventId: (eventId: number) => void
   setEventsCalculatedCenter: (center: MapCenter) => void
   setLocationBoundary: (locationBoundary: LocationBoundary | null) => void
   setMapCenter: (mapCenter: MapCenter) => void
   setSearchType: (searchType: SearchType) => void
 }
 export type State = {
+  activeEventId: number
   eventsCalculatedCenter: MapCenter
   historicalEventsMap: Map<number, HistoricalEvent>
   locationBoundary: LocationBoundary | null
@@ -20,6 +26,7 @@ export type State = {
 export type Store = State & Actions
 
 export const defaultInitState: State = {
+  activeEventId: 0,
   eventsCalculatedCenter: { lat: 0, lng: 0, zoom: 0 },
   historicalEventsMap: new Map(),
   locationBoundary: null,
@@ -37,6 +44,7 @@ export const createStateStore = (initState: State = defaultInitState) => {
           historicalEvent
         )
       })),
+    setActiveEventId: (eventId: number) => set({ activeEventId: eventId }),
     setEventsCalculatedCenter: (center: MapCenter) =>
       set({ eventsCalculatedCenter: center }),
     setLocationBoundary: (locationBoundary: LocationBoundary | null) =>

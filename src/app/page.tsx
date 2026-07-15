@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 
 import { About } from '@/components/about/About'
-import { useSelectHistoricalEvents } from '@/hooks/useSelectHistoricalEvents'
+import { useSelectHistoricalEventsWithCoordinates } from '@/hooks/useSelectHistoricalEventsWithCoordinates'
 import { useStateStore } from '@/providers/storeProvider'
 import { calculateMapCenter } from '@/utils/mapUtils'
 
@@ -22,7 +22,8 @@ function Home() {
   const { setEventsCalculatedCenter, setMapCenter } = useStateStore(
     (state) => state
   )
-  const { historicalEvents, isLoading } = useSelectHistoricalEvents()
+  const { historicalEvents, isLoading } =
+    useSelectHistoricalEventsWithCoordinates()
 
   useEffect(() => {
     const calculatedCenter = calculateMapCenter(historicalEvents)

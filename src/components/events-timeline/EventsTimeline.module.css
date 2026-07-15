@@ -1,0 +1,17 @@
+@import '@/../../../app/globals.css';
+
+.events-timeline {
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(34, 139, 230, 0.25);
+  border-radius: 12px;
+  bottom: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 40, 120, 0.12);
+  left: 50%;
+  max-width: 80vw;
+  min-width: 20vw;
+  padding: 24px 32px 36px 32px;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: var(--z-index-object-default);
+}

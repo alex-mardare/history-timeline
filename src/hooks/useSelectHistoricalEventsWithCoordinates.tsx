@@ -9,7 +9,7 @@ import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 import { supabaseClient } from '@/utils/supabaseClient'
 
-export const useSelectHistoricalEvents = () => {
+const useSelectHistoricalEventsWithCoordinates = () => {
   const [historicalEvents, setHistoricalEvents] = useState<HistoricalEvent[]>(
     []
   )
@@ -25,10 +25,10 @@ export const useSelectHistoricalEvents = () => {
         .from('historical_events')
         .select(
           `id, name, eventDate:event_date, eventTime:event_time, description, latitude, longitude, eventLocation:event_location,
-          historicalEventCategory:historical_event_categories(name),
-          historicalState:historical_states(name),
-          presentCountry:present_countries(name)
-          `
+                historicalEventCategory:historical_event_categories(name),
+                historicalState:historical_states(name),
+                presentCountry:present_countries(name)
+                `
         )
         .not('latitude', 'is', null)
         .not('longitude', 'is', null)
@@ -62,3 +62,5 @@ export const useSelectHistoricalEvents = () => {
 
   return { historicalEvents, isLoading, error }
 }
+
+export { useSelectHistoricalEventsWithCoordinates }

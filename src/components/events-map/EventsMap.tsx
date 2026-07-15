@@ -6,6 +6,7 @@ import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { MapController } from '@/components/events-map/MapController'
+import { EventsTimeline } from '@/components/events-timeline/EventsTimeline'
 import { EventMarkers } from '@/components/leaflet/EventMarkers'
 import { SearchArea } from '@/components/search-area/SearchArea'
 import { MAP_ZOOM_LEVEL } from '@/constants'
@@ -54,6 +55,9 @@ function EventsMap({
               fillOpacity: 0.35
             }}
           />
+        )}
+        {locationBoundary && (
+          <EventsTimeline locationOsmId={locationBoundary.osm_id} />
         )}
       </MapContainer>
     </>

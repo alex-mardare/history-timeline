@@ -7,6 +7,7 @@ interface HistoricalEvent extends Omit<
   HistoricalEventRow,
   | 'created_at'
   | 'event_date'
+  | 'event_date_sort_key'
   | 'event_location'
   | 'event_time'
   | 'historical_event_category_id'

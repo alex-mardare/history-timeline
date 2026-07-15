@@ -3,4 +3,5 @@
   --border-radius-default: calc(0.25rem * 1);
   --button-background-colour: white;
   --button-colour: #2563eb;
+  --z-index-object-default: 400;
 }
