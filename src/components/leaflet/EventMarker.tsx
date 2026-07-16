@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 
 import { HistoricalEvent } from '@/types'
+import { dateFormatter } from '@/utils/dateFormatter'
 
 import { mapPopupIcon } from './mapPopupIcon'
 
@@ -13,6 +14,20 @@ interface EventMarkerProps {
 const markerIcon = mapPopupIcon()
 
 function EventMarker({ event, setMarkerRef }: EventMarkerProps) {
+  const displayEventDate = () => {
+    if (event.eventDate === null) {
+      return <br />
+    } else {
+      return (
+        <>
+          <b>{dateFormatter(event.eventDate)}</b>
+          <br />
+          <br />
+        </>
+      )
+    }
+  }
+
   return (
     <Marker
       icon={markerIcon}
@@ -22,6 +37,7 @@ function EventMarker({ event, setMarkerRef }: EventMarkerProps) {
       <Popup>
         <b>{event.name}</b>
         <br />
+        {displayEventDate()}
         {event.description}
       </Popup>
     </Marker>
