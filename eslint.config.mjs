@@ -29,7 +29,8 @@ const eslintConfig = [
             }
           ]
         }
-      ]
+      ],
+      'no-console': ['warn', { allow: ['error'] }]
     }
   },
   {
