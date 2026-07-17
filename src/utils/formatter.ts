@@ -1,4 +1,6 @@
-function dateFormatter(date: string | null): string {
+import { TEXT_REPLACEMENTS } from '@/constants/constants'
+
+const dateFormatter = (date: string | null): string => {
   if (date === null) {
     return ''
   }
@@ -23,4 +25,15 @@ function dateFormatter(date: string | null): string {
   return `${dateObject.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long', day: 'numeric' })} ${era}`
 }
 
-export { dateFormatter }
+const escapedKeys = Array.from(TEXT_REPLACEMENTS.keys()).map((key) =>
+  key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+)
+const replacementRegex = new RegExp(escapedKeys.join('|'), 'gi')
+const locationSearchFormatter = (locationName: string): string => {
+  return locationName.replaceAll(replacementRegex, (matched) => {
+    const replacement = TEXT_REPLACEMENTS.get(matched.toLowerCase())
+    return replacement !== undefined ? replacement : matched
+  })
+}
+
+export { dateFormatter, locationSearchFormatter }

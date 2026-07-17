@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useRef } from 'react'
 
 import { URLs } from '@/constants'
 import type { Location, PhotonLocation } from '@/types'
+import { locationSearchFormatter } from '@/utils/formatter'
 import { filterLocationTypeByCountry } from '@/utils/locationFilters'
 import { mapPhotonLocation } from '@/utils/locationMapper'
 
@@ -19,8 +20,9 @@ export const useLocationSearch = (
     const abortController = new AbortController()
     abortControllerRef.current = abortController
     try {
+      const formattedLocationName = locationSearchFormatter(locationName)
       const response = await fetch(
-        URLs.PHOTON_KOMOOT + '?q=' + locationName + '&limit=10'
+        URLs.PHOTON_KOMOOT + '?q=' + formattedLocationName + '&limit=10'
       )
 
       const data = await response.json()

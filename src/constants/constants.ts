@@ -6,9 +6,11 @@ const MAP_ZOOM_LEVEL = {
   LOCATION_ZOOM_LEVEL: 11
 }
 
+const TEXT_REPLACEMENTS = new Map([['&', 'and']])
+
 const URLs = {
   NOMINATIM: 'https://nominatim.openstreetmap.org/lookup',
   PHOTON_KOMOOT: 'https://photon.komoot.io/api/'
 }
 
-export { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL, URLs }
+export { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL, TEXT_REPLACEMENTS, URLs }

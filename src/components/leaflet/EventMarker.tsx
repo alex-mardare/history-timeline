@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { Marker, Popup } from 'react-leaflet'
 
 import { HistoricalEvent } from '@/types'
-import { dateFormatter } from '@/utils/dateFormatter'
+import { dateFormatter } from '@/utils/formatter'
 
 import { mapPopupIcon } from './mapPopupIcon'
 
