@@ -26,7 +26,7 @@ export const useLocationSearch = (
       )
 
       const data = await response.json()
-      data.features.forEach((feature: PhotonLocation) => {
+      data?.features?.forEach((feature: PhotonLocation) => {
         if (!!filterLocationTypeByCountry(feature)) {
           setLocations((prevLocations: Location[]) => [
             ...prevLocations,
