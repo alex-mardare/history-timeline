@@ -13,12 +13,12 @@ interface EventsTimelineProps {
 }
 
 function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
-  const { setActiveEventId } = useStateStore((state) => state)
-
+  const { activeEventId, setActiveEventId } = useStateStore((state) => state)
   const panelRef = useRef<HTMLDivElement>(null)
 
   const { historicalEvents, isLoading } =
     useSelectHistoricalEventsByPresentCountry(locationOsmId)
+
   let sliderHistoricalEvents = historicalEvents.map(
     (_: HistoricalEvent, index) => ({
       label: '',
@@ -27,25 +27,49 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
   )
   sliderHistoricalEvents = [{ label: '', value: 0 }, ...sliderHistoricalEvents]
 
+  let currentSliderValue = 0
+  const activeEventIdIndex = historicalEvents.findIndex(
+    (event: HistoricalEvent) => event.id === activeEventId
+  )
+  if (activeEventIdIndex > -1) {
+    currentSliderValue = activeEventIdIndex + 1
+  }
+
   const onChange = (index: number) => {
     if (index === 0) {
-      setActiveEventId(0)
+      setActiveEventId(index)
     } else {
       setActiveEventId(historicalEvents[index - 1].id)
     }
   }
 
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (
+      e.key === 'ArrowRight' &&
+      currentSliderValue < sliderHistoricalEvents.length - 1
+    ) {
+      onChange(currentSliderValue + 1)
+    } else if (e.key === 'ArrowLeft' && currentSliderValue > 0) {
+      onChange(currentSliderValue - 1)
+    }
+  }
+
   useEffect(() => {
     const currentRef = panelRef.current
-
     if (!currentRef) return
+
+    const focusTimeout = setTimeout(() => {
+      currentRef.focus()
+    }, 50)
 
     L.DomEvent.disableClickPropagation(currentRef)
     L.DomEvent.disableScrollPropagation(currentRef)
+
+    return () => clearTimeout(focusTimeout)
   }, [])
 
   return (
-    <div ref={panelRef}>
+    <div onKeyDown={onKeyDown} ref={panelRef} tabIndex={0}>
       {!isLoading && (
         <Slider
           className={styles['events-timeline']}
@@ -57,6 +81,7 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
           max={historicalEvents.length}
           onChange={onChange}
           restrictToMarks
+          value={currentSliderValue}
         />
       )}
     </div>
