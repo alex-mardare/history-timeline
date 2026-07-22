@@ -8,7 +8,7 @@ const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {
   if (events.length === 0 || events === null) {
     return {
       lat: mapCenterLatitude,
-      lng: mapCenterLongitude,
+      long: mapCenterLongitude,
       zoom: MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL
     }
   }
@@ -24,7 +24,7 @@ const calculateMapCenter = (events: HistoricalEvent[]): MapCenter => {
 
   return {
     lat: mapCenterLatitude / coordinatesEvents.length,
-    lng: mapCenterLongitude / coordinatesEvents.length,
+    long: mapCenterLongitude / coordinatesEvents.length,
     zoom: MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL
   }
 }

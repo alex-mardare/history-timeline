@@ -27,10 +27,10 @@ export type Store = State & Actions
 
 export const defaultInitState: State = {
   activeEventId: 0,
-  eventsCalculatedCenter: { lat: 0, lng: 0, zoom: 0 },
+  eventsCalculatedCenter: { lat: 0, long: 0, zoom: 0 },
   historicalEventsMap: new Map(),
   locationBoundary: null,
-  mapCenter: { lat: 0, lng: 0, zoom: 0 },
+  mapCenter: { lat: 0, long: 0, zoom: 0 },
   searchType: 'event'
 }
 

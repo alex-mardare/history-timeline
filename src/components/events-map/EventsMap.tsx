@@ -28,7 +28,7 @@ function EventsMap({
     <>
       <SearchArea {...{ historicalEvents }} />
       <MapContainer
-        center={[mapCenter?.lat, mapCenter?.lng]}
+        center={[mapCenter?.lat, mapCenter?.long]}
         className={styles['events-map-container']}
         zoom={MAP_ZOOM_LEVEL.DEFAULT_ZOOM_LEVEL}
         zoomControl={false}

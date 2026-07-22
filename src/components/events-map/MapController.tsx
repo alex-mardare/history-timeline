@@ -25,7 +25,7 @@ function MapController() {
           console.error('Could not draw the location on the map ', error)
         }
       } else if (mapCenter) {
-        map.setView({ lat: mapCenter.lat, lng: mapCenter.lng }, mapCenter.zoom)
+        map.setView({ lat: mapCenter.lat, lng: mapCenter.long }, mapCenter.zoom)
       }
     }
   }, [locationBoundary, mapCenter, map])

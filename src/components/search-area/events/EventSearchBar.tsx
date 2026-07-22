@@ -52,7 +52,7 @@ function EventSearchBar({
     const selectedEvent = historicalEventsMap.get(eventId)
     setMapCenter({
       lat: selectedEvent?.latitude ?? mapCenter.lat,
-      lng: selectedEvent?.longitude ?? mapCenter.lng,
+      long: selectedEvent?.longitude ?? mapCenter.long,
       zoom: MAP_ZOOM_LEVEL.EVENT_ZOOM_LEVEL
     })
   }

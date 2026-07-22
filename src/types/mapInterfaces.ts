@@ -1,7 +1,12 @@
 type Position = [number, number]
 type NestedPosition = Position | NestedPosition[]
 
-interface MapCenter extends Position {
+interface Coordinate {
+  lat: number
+  long: number
+}
+
+interface MapCenter extends Coordinate {
   zoom: number
 }
 
