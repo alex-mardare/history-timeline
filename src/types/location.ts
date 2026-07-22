@@ -1,6 +1,7 @@
 import { GeoJsonTypes } from 'geojson'
 
 import { OsmValue, PhotonLocationType } from './enums'
+import { NestedPosition, Position } from './mapInterfaces'
 
 type osm_type = 'N' | 'R' | 'W'
 
@@ -17,20 +18,14 @@ interface Location {
 }
 
 interface LocationBoundary {
-  coordinates: {
-    0: number[]
-    1: number[]
-    2: number[]
-    3: number[]
-    4: number[]
-  }
+  coordinates: NestedPosition
   osm_id: number
   type: GeoJsonTypes
 }
 
 interface PhotonLocation {
   geometry: {
-    coordinates: number[]
+    coordinates: Position
   }
   properties: {
     county: string

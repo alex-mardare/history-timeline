@@ -1,4 +1,45 @@
 import { TEXT_REPLACEMENTS } from '@/constants/constants'
+import { NestedPosition, Position } from '@/types'
+
+const coordinatesFormatter = (coordinates: NestedPosition): NestedPosition => {
+  const cloned: NestedPosition = JSON.parse(JSON.stringify(coordinates))
+
+  let anchorLong: number | null = null
+  const findAnchor = (node: NestedPosition): void => {
+    if (typeof node[0] === 'number') {
+      anchorLong = node[0] as number
+      return
+    }
+    if (Array.isArray(node) && node.length > 0) {
+      findAnchor(node[0] as NestedPosition)
+    }
+  }
+  findAnchor(cloned)
+  if (anchorLong === null) return cloned
+
+  const unwrapPoint = (pos: Position): void => {
+    let long = pos[0]
+    while (long - anchorLong! > 180) long -= 360
+    while (long - anchorLong! < -180) long += 360
+    pos[0] = long
+  }
+
+  const processNode = (node: NestedPosition): void => {
+    if (!Array.isArray(node)) return
+
+    if (typeof node[0] === 'number') {
+      unwrapPoint(node as Position)
+      return
+    }
+
+    for (let i = 0; i < node.length; i++) {
+      processNode(node[i] as NestedPosition)
+    }
+  }
+  processNode(cloned)
+
+  return cloned
+}
 
 const dateFormatter = (date: string | null): string => {
   if (date === null) {
@@ -36,4 +77,4 @@ const locationSearchFormatter = (locationName: string): string => {
   })
 }
 
-export { dateFormatter, locationSearchFormatter }
+export { coordinatesFormatter, dateFormatter, locationSearchFormatter }

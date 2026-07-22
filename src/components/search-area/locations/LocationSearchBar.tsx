@@ -14,6 +14,7 @@ import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
 import { useStateStore } from '@/providers/storeProvider'
 import { Location, LocationBoundary } from '@/types'
+import { coordinatesFormatter } from '@/utils/formatter'
 import { filterDuplicateLocations } from '@/utils/locationFilters'
 import { mapLocationSubLabel } from '@/utils/locationMapper'
 
@@ -49,7 +50,7 @@ function LocationSearchBar({
     searchLocationBoundary(location).then((result) => {
       if (result.length > 0) {
         const locationBoundary: LocationBoundary = {
-          coordinates: result[0].geojson.coordinates,
+          coordinates: coordinatesFormatter(result[0].geojson.coordinates),
           osm_id: result[0].osm_id,
           type: result[0].geojson.type
         }

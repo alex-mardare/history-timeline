@@ -1,10 +1,8 @@
-interface Coordinates {
-  lat: number
-  lng: number
-}
+type Position = [number, number]
+type NestedPosition = Position | NestedPosition[]
 
-interface MapCenter extends Coordinates {
+interface MapCenter extends Position {
   zoom: number
 }
 
-export type { MapCenter }
+export type { MapCenter, NestedPosition, Position }

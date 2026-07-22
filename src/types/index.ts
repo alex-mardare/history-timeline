@@ -1,5 +1,5 @@
 export type { SearchType } from './enums'
 export type { HistoricalEvent } from './historicalEvent'
 export type { Location, LocationBoundary, PhotonLocation } from './location'
-export type { MapCenter } from './mapInterfaces'
+export type { MapCenter, NestedPosition, Position } from './mapInterfaces'
 export type { Database } from './supabase'
