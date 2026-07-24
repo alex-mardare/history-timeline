@@ -1,6 +1,7 @@
 import { Slider } from '@mantine/core'
 import L from 'leaflet'
 import { useEffect, useRef } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 import { useSelectHistoricalEventsByPresentCountry } from '@/hooks/useSelectHistoricalEventsByPresentCountry'
 import { useStateStore } from '@/providers/storeProvider'
@@ -13,7 +14,12 @@ interface EventsTimelineProps {
 }
 
 function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
-  const { activeEventId, setActiveEventId } = useStateStore((state) => state)
+  const { activeEventId, setActiveEventId } = useStateStore(
+    useShallow((state) => ({
+      activeEventId: state.activeEventId,
+      setActiveEventId: state.setActiveEventId
+    }))
+  )
   const panelRef = useRef<HTMLDivElement>(null)
 
   const { historicalEvents, isLoading } =

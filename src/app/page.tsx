@@ -1,12 +1,9 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useEffect } from 'react'
 
 import { About } from '@/components/about/About'
 import { useSelectHistoricalEventsWithCoordinates } from '@/hooks/useSelectHistoricalEventsWithCoordinates'
-import { useStateStore } from '@/providers/storeProvider'
-import { calculateMapCenter } from '@/utils/mapUtils'
 
 const DynamicEventsMap = dynamic(
   () =>
@@ -19,21 +16,11 @@ const DynamicEventsMap = dynamic(
 )
 
 function Home() {
-  const { setEventsCalculatedCenter, setMapCenter } = useStateStore(
-    (state) => state
-  )
-  const { historicalEvents, isLoading } =
-    useSelectHistoricalEventsWithCoordinates()
-
-  useEffect(() => {
-    const calculatedCenter = calculateMapCenter(historicalEvents)
-    setMapCenter(calculatedCenter)
-    setEventsCalculatedCenter(calculatedCenter)
-  }, [historicalEvents, setEventsCalculatedCenter, setMapCenter])
+  const { isLoading } = useSelectHistoricalEventsWithCoordinates()
 
   return (
     <>
-      {!isLoading && <DynamicEventsMap {...{ historicalEvents }} />}
+      {!isLoading && <DynamicEventsMap />}
       <About />
     </>
   )

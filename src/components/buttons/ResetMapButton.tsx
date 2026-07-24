@@ -1,4 +1,5 @@
 import { IconCircleX } from '@tabler/icons-react'
+import { useShallow } from 'zustand/shallow'
 
 import { ActionIconButton } from '@/components/buttons/action-icon-button/ActionIconButton'
 import { useStateStore } from '@/providers/storeProvider'
@@ -15,7 +16,15 @@ function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
     mapCenter,
     setLocationBoundary,
     setMapCenter
-  } = useStateStore((state) => state)
+  } = useStateStore(
+    useShallow((state) => ({
+      eventsCalculatedCenter: state.eventsCalculatedCenter,
+      locationBoundary: state.locationBoundary,
+      mapCenter: state.mapCenter,
+      setLocationBoundary: state.setLocationBoundary,
+      setMapCenter: state.setMapCenter
+    }))
+  )
 
   const clearSearchText = () => {
     return searchText.length > 0 && resetSearchText()

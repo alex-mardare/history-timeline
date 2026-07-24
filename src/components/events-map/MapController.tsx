@@ -1,12 +1,18 @@
 import L from 'leaflet'
 import { useEffect } from 'react'
 import { useMap } from 'react-leaflet'
+import { useShallow } from 'zustand/shallow'
 
 import { useStateStore } from '@/providers/storeProvider'
 
 function MapController() {
   const map = useMap()
-  const { locationBoundary, mapCenter } = useStateStore((state) => state)
+  const { locationBoundary, mapCenter } = useStateStore(
+    useShallow((state) => ({
+      locationBoundary: state.locationBoundary,
+      mapCenter: state.mapCenter
+    }))
+  )
 
   useEffect(() => {
     if (!map) return

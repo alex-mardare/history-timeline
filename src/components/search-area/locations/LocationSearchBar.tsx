@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 import { useLocationBoundarySearch } from '@/hooks/useLocationBoundarySearch'
 import { useLocationSearch } from '@/hooks/useLocationSearch'
@@ -34,7 +35,9 @@ function LocationSearchBar({
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { setLocationBoundary } = useStateStore((state) => state)
+  const setLocationBoundary = useStateStore(
+    useShallow((state) => state.setLocationBoundary)
+  )
   const [locations, setLocations] = useState<Location[]>([])
   const { searchLocationBoundary } = useLocationBoundarySearch()
   const { searchLocations } = useLocationSearch(setLocations)

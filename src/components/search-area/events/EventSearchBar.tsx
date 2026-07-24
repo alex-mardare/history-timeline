@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import { Search } from 'lucide-react'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 import { DROPDOWM_OPTIONS_LIMIT, MAP_ZOOM_LEVEL } from '@/constants'
 import { useStateStore } from '@/providers/storeProvider'
@@ -35,7 +36,11 @@ function EventSearchBar({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
   const { historicalEventsMap, mapCenter, setMapCenter } = useStateStore(
-    (state) => state
+    useShallow((state) => ({
+      historicalEventsMap: state.historicalEventsMap,
+      mapCenter: state.mapCenter,
+      setMapCenter: state.setMapCenter
+    }))
   )
 
   const [events, setEvents] = useState<HistoricalEvent[]>([])

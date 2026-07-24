@@ -1,5 +1,6 @@
 import { useCombobox } from '@mantine/core'
 import { useState } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 import { ResetMapButton } from '@/components/buttons/ResetMapButton'
 import { EventSearchArea } from '@/components/search-area/events/EventSearchArea'
@@ -17,7 +18,7 @@ function SearchArea({ historicalEvents }: SearchAreaProps) {
   const comboboxStore = useCombobox({
     onDropdownClose: () => comboboxStore.resetSelectedOption()
   })
-  const { searchType } = useStateStore((state) => state)
+  const searchType = useStateStore(useShallow((state) => state.searchType))
   const [searchText, setSearchText] = useState('')
 
   return (

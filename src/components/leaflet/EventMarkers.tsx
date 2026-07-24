@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
+import { useShallow } from 'zustand/shallow'
 
 import { EventMarkerMemo } from '@/components/leaflet/EventMarker'
 import { useStateStore } from '@/providers/storeProvider'
@@ -9,7 +10,9 @@ interface EventMarkersProps {
 }
 
 const EventMarkers = ({ historicalEvents }: EventMarkersProps) => {
-  const activeEventId = useStateStore((state) => state.activeEventId)
+  const activeEventId = useStateStore(
+    useShallow((state) => state.activeEventId)
+  )
 
   const markerRefs = useRef<{ [keys: string]: L.Marker }>({})
 
