@@ -45,6 +45,14 @@ function About() {
                 are adapted from <strong>Wikipedia</strong> under the CC BY-SA
                 4.0 license.
               </Text>
+              <Text size="md">
+                The location of historical events varies by era and event type.
+                Exact coordinates are assigned to events verified through
+                archaeological sites, official surveying, modern instrumental
+                detection, primary sources, or historical records. Events
+                lacking physical or textual confirmation are mapped to estimated
+                coordinates.
+              </Text>
               <Text size="sm" c="dimmed">
                 Disclaimer: Coordinates for historical sites are approximate and
                 intended for illustrative purposes only.

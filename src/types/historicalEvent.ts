@@ -5,6 +5,7 @@ import { HistoricalEventRow } from './schema'
 
 interface HistoricalEvent extends Omit<
   HistoricalEventRow,
+  | 'approximate_real_location'
   | 'created_at'
   | 'event_date'
   | 'event_date_sort_key'
@@ -21,6 +22,7 @@ interface HistoricalEvent extends Omit<
   historicalEventCategory: HistoricalEventCategory | null
   historicalState: HistoricalState | null
   presentCountry: PresentCountry | null
+  realLocation: boolean
 }
 
 export type { HistoricalEvent }

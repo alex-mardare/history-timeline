@@ -33,7 +33,7 @@ const useSelectHistoricalEventsWithCoordinates = () => {
       const { data, error } = await supabaseClient
         .from('historical_events')
         .select(
-          `id, name, eventDate:event_date, eventTime:event_time, description, latitude, longitude, eventLocation:event_location,
+          `id, name, eventDate:event_date, eventTime:event_time, description, latitude, longitude, eventLocation:event_location, realLocation:approximate_real_location,
                 historicalEventCategory:historical_event_categories(name),
                 historicalState:historical_states(name),
                 presentCountry:present_countries(name)

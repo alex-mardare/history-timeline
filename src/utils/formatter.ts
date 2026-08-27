@@ -1,5 +1,5 @@
 import { TEXT_REPLACEMENTS } from '@/constants/constants'
-import { NestedPosition, Position } from '@/types'
+import { HistoricalEvent, NestedPosition, Position } from '@/types'
 
 const coordinatesFormatter = (coordinates: NestedPosition): NestedPosition => {
   const cloned: NestedPosition = JSON.parse(JSON.stringify(coordinates))
@@ -41,11 +41,11 @@ const coordinatesFormatter = (coordinates: NestedPosition): NestedPosition => {
   return cloned
 }
 
-const dateFormatter = (date: string | null): string => {
-  if (date === null) {
+const eventDateTimeFormatter = (event: HistoricalEvent): string => {
+  if (event.eventDate === null) {
     return ''
   }
-  const dateComponents: string[] = date.split('-')
+  const dateComponents: string[] = event.eventDate.split('-')
   let era, year, month, day
   if (dateComponents[0].length === 0) {
     era = 'BC'
@@ -53,7 +53,6 @@ const dateFormatter = (date: string | null): string => {
     month = Number.parseInt(dateComponents[2])
     day = Number.parseInt(dateComponents[3])
   } else {
-    era = 'AD'
     year = Number.parseInt(dateComponents[0])
     month = Number.parseInt(dateComponents[1])
     day = Number.parseInt(dateComponents[2])
@@ -61,9 +60,27 @@ const dateFormatter = (date: string | null): string => {
 
   const dateObject = new Date()
   dateObject.setFullYear(year)
-  dateObject.setMonth(month)
+  dateObject.setMonth(month - 1)
   dateObject.setDate(day)
-  return `${dateObject.toLocaleDateString(navigator.language, { year: 'numeric', month: 'long', day: 'numeric' })} ${era}`
+
+  const outputDate: string = dateObject.toLocaleString(navigator.language, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+  let outputTime: string = ''
+  if (event.eventTime !== null) {
+    const timeComponents: string[] = event.eventTime.split(':')
+    dateObject.setHours(Number.parseInt(timeComponents[0]))
+    dateObject.setMinutes(Number.parseInt(timeComponents[1]))
+    outputTime = `${dateObject.toLocaleTimeString(navigator.language, { hour: 'numeric', minute: 'numeric' })}`
+  }
+  let outputDateTime = `${outputDate} ${outputTime}`
+  if (era === 'BC') {
+    outputDateTime += ` ${era}`
+  }
+
+  return outputDateTime
 }
 
 const escapedKeys = Array.from(TEXT_REPLACEMENTS.keys()).map((key) =>
@@ -77,4 +94,4 @@ const locationSearchFormatter = (locationName: string): string => {
   })
 }
 
-export { coordinatesFormatter, dateFormatter, locationSearchFormatter }
+export { coordinatesFormatter, eventDateTimeFormatter, locationSearchFormatter }

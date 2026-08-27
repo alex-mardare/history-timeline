@@ -1,0 +1,32 @@
+.popup-date {
+  font-weight: bold;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.popup-header-text {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+}
+
+.popup-icon-badge {
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.popup-icon-badge svg {
+  fill: #eb4d25;
+  height: 35px;
+  stroke: black;
+  width: 35px;
+}
+
+.popup-title {
+  font-size: 14px;
+  font-weight: bold;
+}
