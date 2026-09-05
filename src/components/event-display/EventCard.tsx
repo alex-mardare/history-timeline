@@ -1,28 +1,23 @@
 import { Tooltip } from '@mantine/core'
 import { IconMapPin } from '@tabler/icons-react'
-import { memo } from 'react'
-import { Marker, Popup } from 'react-leaflet'
 
-import { mapPopupIcon } from '@/components/leaflet/mapPopupIcon'
 import { HistoricalEvent } from '@/types'
 import { eventDateTimeFormatter } from '@/utils/formatter'
 
-import styles from './EventMarker.module.css'
+import styles from './EventCard.module.css'
 
-interface EventMarkerProps {
+interface EventCardProps {
   event: HistoricalEvent
-  setMarkerRef: (id: number, marker: L.Marker | null) => void
 }
 
-const markerIcon = mapPopupIcon()
-
-function EventMarker({ event, setMarkerRef }: EventMarkerProps) {
-  const displayEventDate = () => {
+function EventCard({ event }: EventCardProps) {
+  const displaySubtitleSection = () => {
     if (event.eventDate === null) return null
     return (
-      <span className={styles['popup-date']}>
-        {eventDateTimeFormatter(event)}
-      </span>
+      <div className={styles['popup-subtitle']}>
+        <span>{eventDateTimeFormatter(event)}</span>
+        <span>{event.eventLocation}</span>
+      </div>
     )
   }
 
@@ -42,25 +37,19 @@ function EventMarker({ event, setMarkerRef }: EventMarkerProps) {
       <div className={styles['popup-header']}>
         <div className={styles['popup-header-text']}>
           <span className={styles['popup-title']}>{event.name}</span>
-          {displayEventDate()}
+          {displaySubtitleSection()}
         </div>
         {displayIconSection()}
       </div>
     )
   }
-
+  // recreate Popup from scratch
   return (
-    <Marker
-      icon={markerIcon}
-      position={[event.latitude as number, event.longitude as number]}
-      ref={(marker) => setMarkerRef(event.id, marker)}
-    >
-      <Popup>
-        {displayHeaderSection()}
-        {event.description}
-      </Popup>
-    </Marker>
+    <>
+      {displayHeaderSection()}
+      {event.description}
+    </>
   )
 }
 
-export const EventMarkerMemo = memo(EventMarker)
+export { EventCard }

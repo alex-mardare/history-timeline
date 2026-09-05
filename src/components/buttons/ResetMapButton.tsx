@@ -14,6 +14,8 @@ function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
     eventsCalculatedCenter,
     locationBoundary,
     mapCenter,
+    resetCountryHistoricalEvents,
+    setActiveEventId,
     setLocationBoundary,
     setMapCenter
   } = useStateStore(
@@ -21,6 +23,8 @@ function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
       eventsCalculatedCenter: state.eventsCalculatedCenter,
       locationBoundary: state.locationBoundary,
       mapCenter: state.mapCenter,
+      resetCountryHistoricalEvents: state.resetCountryHistoricalEvents,
+      setActiveEventId: state.setActiveEventId,
       setLocationBoundary: state.setLocationBoundary,
       setMapCenter: state.setMapCenter
     }))
@@ -33,6 +37,8 @@ function ResetMapButton({ resetSearchText, searchText }: ResetMapButtonProps) {
     if (locationBoundary !== null) {
       setLocationBoundary(null)
       clearSearchText()
+      setActiveEventId(0)
+      resetCountryHistoricalEvents()
     }
     if (eventsCalculatedCenter !== mapCenter) {
       setMapCenter(eventsCalculatedCenter)

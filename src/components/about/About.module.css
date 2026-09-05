@@ -2,7 +2,7 @@
   bottom: 20;
   left: 20;
   position: fixed;
-  z-index: var(--z-index-object-default);
+  z-index: var(--z-index-default);
 }
 
 .modal-header {

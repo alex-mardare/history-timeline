@@ -2,28 +2,46 @@ import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
+import { useEffect, useState } from 'react'
 import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 import { useShallow } from 'zustand/shallow'
 
+import { EventTooltip } from '@/components/event-display/EventTooltip'
+import { EventMarkers } from '@/components/events-map/EventMarkers'
 import { MapController } from '@/components/events-map/MapController'
 import { EventsTimeline } from '@/components/events-timeline/EventsTimeline'
-import { EventMarkers } from '@/components/leaflet/EventMarkers'
 import { SearchArea } from '@/components/search-area/SearchArea'
 import { MAP_ZOOM_LEVEL } from '@/constants'
 import { useStateStore } from '@/providers/storeProvider'
+import type { HistoricalEvent } from '@/types'
 
 import styles from './EventsMap.module.css'
 
 function EventsMap(): React.JSX.Element {
-  const { historicalEventsMap, locationBoundary, mapCenter } = useStateStore(
+  const {
+    activeEventId,
+    countryHistoricalEvents,
+    mapHistoricalEvents,
+    locationBoundary,
+    mapCenter
+  } = useStateStore(
     useShallow((state) => ({
-      historicalEventsMap: state.historicalEventsMap,
+      activeEventId: state.activeEventId,
+      countryHistoricalEvents: state.countryHistoricalEvents,
+      mapHistoricalEvents: state.mapHistoricalEvents,
       locationBoundary: state.locationBoundary,
       mapCenter: state.mapCenter
     }))
   )
-  const historicalEvents = Array.from(historicalEventsMap.values())
+  const historicalEvents = Array.from(mapHistoricalEvents.values())
+  const [activeEvent, setActiveEvent] = useState<HistoricalEvent | undefined>(
+    undefined
+  )
+
+  useEffect(() => {
+    setActiveEvent(countryHistoricalEvents.get(activeEventId))
+  }, [activeEventId, countryHistoricalEvents])
 
   return (
     <>
@@ -60,6 +78,7 @@ function EventsMap(): React.JSX.Element {
         {locationBoundary && (
           <EventsTimeline locationOsmId={locationBoundary.osm_id} />
         )}
+        <EventTooltip event={activeEvent} />
       </MapContainer>
     </>
   )

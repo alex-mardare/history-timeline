@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useShallow } from 'zustand/shallow'
 
-import { EventMarkerMemo } from '@/components/leaflet/EventMarker'
+import { EventMarkerMemo } from '@/components/events-map/EventMarker'
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 

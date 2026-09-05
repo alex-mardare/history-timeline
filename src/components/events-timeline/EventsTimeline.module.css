@@ -13,5 +13,5 @@
   position: absolute;
   transform: translateX(-50%);
   width: 100%;
-  z-index: var(--z-index-object-default);
+  z-index: var(--z-index-default);
 }

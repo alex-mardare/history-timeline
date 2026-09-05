@@ -3,7 +3,7 @@
 .action-icon-button {
   background-color: var(--button-background-colour);
   border: var(--border-default);
-  border-radius: var(--border-radius-default);
+  border-radius: var(--border-radius-button-default);
   color: var(--button-colour);
   height: 36px;
   width: 38px;

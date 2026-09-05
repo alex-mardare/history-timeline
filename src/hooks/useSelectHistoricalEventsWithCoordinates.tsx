@@ -18,10 +18,10 @@ const useSelectHistoricalEventsWithCoordinates = () => {
   const [error, setError] = useState<PostgrestError | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const { addHistoricalEventToMap, setEventsCalculatedCenter, setMapCenter } =
+  const { addMapHistoricalEvents, setEventsCalculatedCenter, setMapCenter } =
     useStateStore(
       useShallow((state) => ({
-        addHistoricalEventToMap: state.addHistoricalEventToMap,
+        addMapHistoricalEvents: state.addMapHistoricalEvents,
         setEventsCalculatedCenter: state.setEventsCalculatedCenter,
         setMapCenter: state.setMapCenter
       }))
@@ -59,7 +59,7 @@ const useSelectHistoricalEventsWithCoordinates = () => {
       } else {
         if (data) {
           data.forEach((event: HistoricalEvent) => {
-            addHistoricalEventToMap(event)
+            addMapHistoricalEvents(event)
           })
           setHistoricalEvents(data)
 
@@ -71,7 +71,7 @@ const useSelectHistoricalEventsWithCoordinates = () => {
     }
 
     selectHistoricalEvents().finally(() => setIsLoading(false))
-  }, [addHistoricalEventToMap, setEventsCalculatedCenter, setMapCenter])
+  }, [addMapHistoricalEvents, setEventsCalculatedCenter, setMapCenter])
 
   return { historicalEvents, isLoading, error }
 }

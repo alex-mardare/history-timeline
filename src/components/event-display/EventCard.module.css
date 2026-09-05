@@ -1,7 +1,3 @@
-.popup-date {
-  font-weight: bold;
-}
-
 .popup-header {
   display: flex;
   justify-content: space-between;
@@ -21,12 +17,19 @@
 
 .popup-icon-badge svg {
   fill: #eb4d25;
-  height: 35px;
+  height: 45px;
   stroke: black;
-  width: 35px;
+  width: 45px;
+}
+
+.popup-subtitle {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .popup-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
 }

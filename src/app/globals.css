@@ -1,7 +1,9 @@
 :root {
   --border-default: 1px solid #ced4da;
-  --border-radius-default: calc(0.25rem * 1);
+  --border-radius-button-default: calc(0.25rem * 1);
+  --border-radius-event-card-default: 12px;
+  --box-shadow-event-card-default: 0 3px 14px #0006;
   --button-background-colour: white;
   --button-colour: #2563eb;
-  --z-index-object-default: 400;
+  --z-index-default: 400;
 }

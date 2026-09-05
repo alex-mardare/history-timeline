@@ -4,7 +4,9 @@ import { notifications } from '@mantine/notifications'
 import { PostgrestError } from '@supabase/supabase-js'
 import { IconExclamationCircleFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
+import { useShallow } from 'zustand/shallow'
 
+import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 import { supabaseClient } from '@/utils/supabaseClient'
 
@@ -14,6 +16,11 @@ const useSelectHistoricalEventsByPresentCountry = (locationOsmId: number) => {
   )
   const [error, setError] = useState<PostgrestError | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const { addCountryHistoricalEvents } = useStateStore(
+    useShallow((state) => ({
+      addCountryHistoricalEvents: state.addCountryHistoricalEvents
+    }))
+  )
 
   useEffect(() => {
     async function selectHistoricalEvents() {
@@ -45,13 +52,16 @@ const useSelectHistoricalEventsByPresentCountry = (locationOsmId: number) => {
         handleNoData()
       } else {
         if (data) {
+          data.forEach((event: HistoricalEvent) => {
+            addCountryHistoricalEvents(event)
+          })
           setHistoricalEvents(data)
         }
       }
     }
 
     selectHistoricalEvents().finally(() => setIsLoading(false))
-  }, [locationOsmId])
+  }, [addCountryHistoricalEvents, locationOsmId])
 
   return { historicalEvents, isLoading, error }
 }
