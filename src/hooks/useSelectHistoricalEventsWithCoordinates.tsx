@@ -2,13 +2,13 @@
 
 import { notifications } from '@mantine/notifications'
 import { PostgrestError } from '@supabase/supabase-js'
-import { IconExclamationCircleFilled } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
 import { useStateStore } from '@/providers/storeProvider'
 import { HistoricalEvent } from '@/types'
 import { calculateMapCenter } from '@/utils/mapUtils'
+import { noHistoricalEventsLoading } from '@/utils/notifications'
 import { supabaseClient } from '@/utils/supabaseClient'
 
 const useSelectHistoricalEventsWithCoordinates = () => {
@@ -44,16 +44,7 @@ const useSelectHistoricalEventsWithCoordinates = () => {
       if (error) {
         setError(error)
         const handleNoData = () => {
-          notifications.show({
-            autoClose: 300000,
-            color: 'red',
-            icon: <IconExclamationCircleFilled />,
-            message:
-              'There was an issue loading the historical events. Please try again later.',
-            position: 'top-right',
-            title: 'Problems loading the data',
-            withCloseButton: true
-          })
+          notifications.show(noHistoricalEventsLoading)
         }
         handleNoData()
       } else {

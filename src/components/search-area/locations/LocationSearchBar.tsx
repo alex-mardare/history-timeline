@@ -51,7 +51,7 @@ function LocationSearchBar({
 
   const loadLocationLimits = (location: Location) => {
     searchLocationBoundary(location).then((result) => {
-      if (result.length > 0) {
+      if (result?.length > 0) {
         const locationBoundary: LocationBoundary = {
           coordinates: coordinatesFormatter(result[0].geojson.coordinates),
           osm_id: result[0].osm_id,
