@@ -21,6 +21,7 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
     }))
   )
   const panelRef = useRef<HTMLDivElement>(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
 
   const { historicalEvents, isLoading } =
     useSelectHistoricalEventsByPresentCountry(locationOsmId)
@@ -42,21 +43,11 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
   }
 
   const onChange = (index: number) => {
+    if (index === currentSliderValue) return
     if (index === 0) {
       setActiveEventId(index)
     } else {
       setActiveEventId(historicalEvents[index - 1].id)
-    }
-  }
-
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (
-      e.key === 'ArrowRight' &&
-      currentSliderValue < sliderHistoricalEvents.length - 1
-    ) {
-      onChange(currentSliderValue + 1)
-    } else if (e.key === 'ArrowLeft' && currentSliderValue > 0) {
-      onChange(currentSliderValue - 1)
     }
   }
 
@@ -74,8 +65,20 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
     return () => clearTimeout(focusTimeout)
   }, [])
 
+  useEffect(() => {
+    if (!isLoading && sliderRef.current) {
+      const timer = setTimeout(() => {
+        const sliderThunmb = sliderRef.current?.querySelector<HTMLDivElement>(
+          '.mantine-Slider-thumb'
+        )
+        sliderThunmb?.focus()
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+  }, [isLoading])
+
   return (
-    <div onKeyDown={onKeyDown} ref={panelRef} tabIndex={0}>
+    <div ref={panelRef} tabIndex={0}>
       {!isLoading && (
         <Slider
           className={styles['events-timeline']}
@@ -86,6 +89,7 @@ function EventsTimeline({ locationOsmId }: EventsTimelineProps) {
           marks={sliderHistoricalEvents}
           max={historicalEvents.length}
           onChange={onChange}
+          ref={sliderRef}
           restrictToMarks
           value={currentSliderValue}
         />
