@@ -1,13 +1,10 @@
 import 'leaflet/dist/leaflet.css'
-import 'leaflet.markercluster/dist/MarkerCluster.css'
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
 import { useEffect, useState } from 'react'
 import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
-import MarkerClusterGroup from 'react-leaflet-markercluster'
 import { useShallow } from 'zustand/shallow'
 
-import { EventTooltip } from '@/components/event-display/EventTooltip'
+import { EventCard } from '@/components/event-display/EventCard'
 import { EventMarkers } from '@/components/events-map/EventMarkers'
 import { MapController } from '@/components/events-map/MapController'
 import { EventsTimeline } from '@/components/events-timeline/EventsTimeline'
@@ -53,13 +50,7 @@ function EventsMap(): React.JSX.Element {
         zoomControl={false}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <MarkerClusterGroup
-          chunkedLoading={true}
-          maxClusterRadius={20}
-          showCoverageOnHover={false}
-        >
-          <EventMarkers {...{ historicalEvents }} />
-        </MarkerClusterGroup>
+        <EventMarkers {...{ historicalEvents }} />
         <ZoomControl position="topright" />
         <MapController />
         {locationBoundary && (
@@ -78,7 +69,7 @@ function EventsMap(): React.JSX.Element {
         {locationBoundary && (
           <EventsTimeline locationOsmId={locationBoundary.osm_id} />
         )}
-        <EventTooltip event={activeEvent} />
+        <EventCard event={activeEvent} />
       </MapContainer>
     </>
   )

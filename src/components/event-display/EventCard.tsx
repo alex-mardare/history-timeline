@@ -1,54 +1,26 @@
-import { Tooltip } from '@mantine/core'
-import { IconMapPin } from '@tabler/icons-react'
-
+import { EventDetails } from '@/components/event-display/EventDetails'
 import { HistoricalEvent } from '@/types'
-import { eventDateTimeFormatter } from '@/utils/formatter'
 
 import styles from './EventCard.module.css'
 
-interface EventCardProps {
-  event: HistoricalEvent
+interface EventCardProp {
+  event: HistoricalEvent | undefined
 }
 
-function EventCard({ event }: EventCardProps) {
-  const displaySubtitleSection = () => {
-    if (event.eventDate === null) return null
-    return (
-      <div className={styles['popup-subtitle']}>
-        <span>{eventDateTimeFormatter(event)}</span>
-        <span>{event.eventLocation}</span>
-      </div>
-    )
+function EventCard({ event }: EventCardProp) {
+  if (
+    event === undefined ||
+    (event.latitude !== null && event.longitude !== null)
+  ) {
+    return null
   }
 
-  const displayIconSection = () => {
-    if (!event.realLocation) return null
-    return (
-      <Tooltip label="Real location" position="top">
-        <div className={styles['popup-icon-badge']}>
-          <IconMapPin />
-        </div>
-      </Tooltip>
-    )
-  }
-
-  const displayHeaderSection = () => {
-    return (
-      <div className={styles['popup-header']}>
-        <div className={styles['popup-header-text']}>
-          <span className={styles['popup-title']}>{event.name}</span>
-          {displaySubtitleSection()}
-        </div>
-        {displayIconSection()}
-      </div>
-    )
-  }
-  // recreate Popup from scratch
   return (
-    <>
-      {displayHeaderSection()}
-      {event.description}
-    </>
+    <div className={styles['event-tooltip-container']}>
+      <div className={styles['event-tooltip-body']}>
+        <EventDetails {...{ event }} />
+      </div>
+    </div>
   )
 }
 

@@ -12,6 +12,7 @@
   "dependencies": {
     "@mantine/core": "9.6.1",
     "@mantine/notifications": "9.6.1",
+    "@react-leaflet/core": "^3.0.0",
     "@supabase/supabase-js": "2.116.0",
     "@tabler/icons-react": "^3.46.0",
     "@types/geojson": "^7946.0.16",
@@ -24,8 +25,9 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-leaflet": "^5.0.0",
-    "react-leaflet-markercluster": "^5.0.0-rc.0",
     "supabase": "^2.117.0",
+    "supercluster": "^9.1.0",
+    "use-supercluster": "^1.2.0",
     "zustand": "^5.0.15"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 import { memo } from 'react'
-import { Marker, Popup } from 'react-leaflet'
+import { Marker } from 'react-leaflet'
 
-import { EventCard } from '@/components/event-display/EventCard'
-import { mapPopupIcon } from '@/components/events-map/mapPopupIcon'
+import { EventPopup } from '@/components/event-display/EventPopup'
+import { mapPopupIcon } from '@/components/leaflet-icons/mapPopupIcon'
 import { HistoricalEvent } from '@/types'
 
 interface EventMarkerProps {
@@ -19,9 +19,7 @@ function EventMarker({ event, setMarkerRef }: EventMarkerProps) {
       position={[event.latitude as number, event.longitude as number]}
       ref={(marker) => setMarkerRef(event.id, marker)}
     >
-      <Popup closeButton={false}>
-        <EventCard {...{ event }} />
-      </Popup>
+      <EventPopup {...{ event }} />
     </Marker>
   )
 }

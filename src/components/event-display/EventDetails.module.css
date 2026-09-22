@@ -1,0 +1,35 @@
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.popup-header-text {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+}
+
+.popup-icon-badge {
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.popup-icon-badge svg {
+  fill: #eb4d25;
+  height: 45px;
+  stroke: black;
+  width: 45px;
+}
+
+.popup-subtitle {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.popup-title {
+  font-size: 15px;
+  font-weight: bold;
+}
