@@ -13,7 +13,6 @@ interface HistoricalEvent extends Omit<
   | 'event_time'
   | 'historical_event_category_id'
   | 'historical_state_id'
-  | 'present_country_id'
   | 'updated_at'
 > {
   eventDate: string | null
@@ -21,7 +20,7 @@ interface HistoricalEvent extends Omit<
   eventTime: string | null
   historicalEventCategory: HistoricalEventCategory | null
   historicalState: HistoricalState | null
-  presentCountry: PresentCountry | null
+  presentCountry?: PresentCountry | null
   realLocation: boolean
 }
 

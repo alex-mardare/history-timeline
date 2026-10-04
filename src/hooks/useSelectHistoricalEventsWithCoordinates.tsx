@@ -35,8 +35,7 @@ const useSelectHistoricalEventsWithCoordinates = () => {
         .select(
           `id, name, eventDate:event_date, eventTime:event_time, description, latitude, longitude, eventLocation:event_location, realLocation:approximate_real_location,
                 historicalEventCategory:historical_event_categories(name),
-                historicalState:historical_states(name),
-                presentCountry:present_countries(name)
+                historicalState:historical_states(name)
                 `
         )
         .not('latitude', 'is', null)

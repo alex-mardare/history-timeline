@@ -29,11 +29,14 @@ const useSelectHistoricalEventsByPresentCountry = (locationOsmId: number) => {
         .from('historical_events')
         .select(
           `id, name, eventDate:event_date, eventTime:event_time, description, latitude, longitude, eventLocation:event_location, realLocation:approximate_real_location,
-          historicalEventCategory:historical_event_categories(name),
-          historicalState:historical_states(name),
-          presentCountry:present_countries!inner(name)`
+        historicalEventCategory:historical_event_categories(name),
+        historicalState:historical_states(name),
+        historical_events_present_countries!inner(present_countries!inner(name, osm_id))`
         )
-        .eq('present_countries.osm_id', locationOsmId)
+        .eq(
+          'historical_events_present_countries.present_countries.osm_id',
+          locationOsmId
+        )
         .order('event_date_sort_key', { ascending: true })
       if (error) {
         setError(error)
@@ -43,10 +46,16 @@ const useSelectHistoricalEventsByPresentCountry = (locationOsmId: number) => {
         handleNoData()
       } else {
         if (data) {
-          data.forEach((event: HistoricalEvent) => {
+          const formattedEvents: HistoricalEvent[] = data.map((event) => ({
+            ...event,
+            presentCountry:
+              event.historical_events_present_countries?.[0]
+                ?.present_countries ?? null
+          }))
+          formattedEvents.forEach((event: HistoricalEvent) => {
             addCountryHistoricalEvents(event)
           })
-          setHistoricalEvents(data)
+          setHistoricalEvents(formattedEvents)
         }
       }
     }
